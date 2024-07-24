@@ -15,11 +15,15 @@ export default function Login() {
       </header>
       <div className="login-window">
         <div className="left">
-          {isLogin ? <LoginForm setIsLogin={setIsLogin} /> : <LoginImage />}
+          {isLogin ? (
+            <LoginForm setIsLogin={setIsLogin} />
+          ) : (
+            <LoginImage setIsLogin={setIsLogin} isLogin={isLogin} />
+          )}
         </div>
         <div className="right">
           {isLogin ? (
-            <LoginImage />
+            <LoginImage setIsLogin={setIsLogin} isLogin={isLogin} />
           ) : (
             <RegistrationForm setIsLogin={setIsLogin} />
           )}
@@ -34,7 +38,11 @@ export default function Login() {
       </footer>
       <style jsx>{`
         .container {
-          background-color: #fff8f8;
+          background-image: linear-gradient(
+            180deg,
+            lightslategray,
+            DarkSeaGreen
+          );
           min-height: 100vh;
           margin: 0;
           display: flex;
@@ -46,7 +54,7 @@ export default function Login() {
           width: 100%;
           flex-direction: row;
           justify-content: space-between;
-          background-color: purple;
+          background-color: darkslategray;
           font-size: 28px;
           font-weight: 600;
           color: white;
@@ -70,19 +78,20 @@ export default function Login() {
           }
         }
         .left {
-          background-color: blue;
+          background-color: DarkSeaGreen;
           width: 50%;
-          box-shadow: -20px 20px 50px 10px purple inset;
+          box-shadow: -20px 20px 50px 10px darkslategray inset;
         }
         .right {
-          background-color: red;
-          box-shadow: 20px 20px 50px 10px purple inset;
+          background-color: lightslategray;
+          box-shadow: 20px 20px 50px 10px darkslategray inset;
           width: 50%;
         }
 
         footer {
-          background-color: #d5d5d5;
-          padding: 20px;
+          background-color: darkslategray;
+          color: white;
+          padding: 30px 50px;
         }
         @media only screen and (min-width: 701px) {
           .login-window {
@@ -107,7 +116,7 @@ export default function Login() {
           .right {
             width: 100%;
             height: 50%;
-            box-shadow: -20px 20px 50px 10px purple inset;
+            box-shadow: -20px 20px 50px 10px darkslategray inset;
           }
         }
       `}</style>

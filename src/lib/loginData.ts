@@ -10,23 +10,25 @@ export interface User {
   password: string;
 }
 
-interface Student {
+export interface Student {
   id: number;
   name: string;
   class_id: number;
   parent_id: number;
   address: string;
   user_id: number;
+  class_name: string;
+  parent_name: string;
 }
 
-interface Parent {
+export interface Parent {
   id: number;
   name: string;
   user_id: number;
   phone_number: string;
 }
 
-interface Teacher {
+export interface Teacher {
   id: number;
   name: string;
   user_id: number;
@@ -41,14 +43,35 @@ type userPublicData = {
   setActualRole: () => Promise<void>;
 };
 
+const ssrFriendlyStorage = {
+  getItem: (key: string) => {
+    if (typeof window != "undefined") {
+      return localStorage.getItem(key);
+    }
+    return null;
+  },
+  setItem: (key: string, value: string) => {
+    if (typeof window != "undefined") {
+      localStorage.setItem(key, value);
+    }
+  },
+  clear: () => {
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+    }
+  },
+};
+
 export const useUserPublicData = create<userPublicData>((set) => ({
-  actual_user: localStorage.getItem("actual_user")
+  //actual_user: localStorage.getItem("actual_user")
+  //ssrFriendlyStorage insted localStorage
+  actual_user: ssrFriendlyStorage.getItem("actual_user")
     ? (JSON.parse(
-        localStorage.getItem("actual_user") as string
+        ssrFriendlyStorage.getItem("actual_user") as string
       ) as Partial<User> | null)
     : null,
-  actual_role: localStorage.getItem("actual_role")
-    ? (JSON.parse(localStorage.getItem("actual_role") as string) as
+  actual_role: ssrFriendlyStorage.getItem("actual_role")
+    ? (JSON.parse(ssrFriendlyStorage.getItem("actual_role") as string) as
         | Teacher
         | Parent
         | Student
@@ -60,7 +83,7 @@ export const useUserPublicData = create<userPublicData>((set) => ({
     console.log("just an example for an async function");
   },
   clearLocalStorage: () => {
-    localStorage.clear();
+    ssrFriendlyStorage.clear();
   },
   setActualRole: async () => {
     console.log("set actual role");

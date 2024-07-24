@@ -104,11 +104,13 @@ export default function LoginForm(props: LoginProps) {
           Login
         </button>
       </form>
-
+      {/* 
       <div>If you dont have already account, then use:</div>
       <button onClick={() => props.setIsLogin(false)}>Registration</button>
+       <button onClick={getUsers}>getUsers</button>
+      */}
       <button onClick={clearLocalStorages}>Clear storage</button>
-      <button onClick={getUsers}>getUsers</button>
+
       <style jsx>
         {`
           .login-form {

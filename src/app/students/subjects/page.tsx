@@ -7,6 +7,7 @@ import TableComponent from "../../components/TableComponent";
 function StudentSubjects() {
   const [fetchedClass, setFetchedClass] = useState([]);
   const [fetchedClassMates, setFetchedClassMates] = useState([]);
+  const [fetchedTeachersOfClass, setFetchedTeachersOfClass] = useState([]);
 
   /*   useEffect(() => {
     try {
@@ -38,9 +39,6 @@ function StudentSubjects() {
     );
     const class_id = storageRole.class_id;
 
-    console.log("haha");
-    console.log(class_id);
-
     const fetchClassMates = async () => {
       const response = await fetch(
         `http://localhost:3000/classes/classmates/${class_id}`
@@ -49,6 +47,23 @@ function StudentSubjects() {
       setFetchedClassMates(data);
     };
     fetchClassMates();
+
+    const accessToken = localStorage.getItem("accessToken");
+    const fetchTeachersOfClass = async () => {
+      const response = await fetch(
+        `http://localhost:3000/relations/withClass/${class_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      //console.log(`http://localhost:3000/relations/withClass/${class_id}`);
+      const data = await response.json();
+      setFetchedTeachersOfClass(data);
+    };
+    fetchTeachersOfClass();
   }, []);
 
   return (
@@ -59,12 +74,16 @@ function StudentSubjects() {
       <div>
         <TableComponent
           data={fetchedClass}
-          tableName="Casses table"
+          tableName="Classes table"
         ></TableComponent>{" "}
         <br />
         <TableComponent
           data={fetchedClassMates}
           tableName="Classmates table"
+        ></TableComponent>
+        <TableComponent
+          data={fetchedTeachersOfClass}
+          tableName="Subjects and teachers:"
         ></TableComponent>
       </div>
     </StudentsLayout>

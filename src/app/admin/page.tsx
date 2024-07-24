@@ -3,7 +3,7 @@
 function ParentPage() {
   return (
     <div className="container">
-      <h1>Parent page</h1>
+      <h1>Admin page</h1>
       <h2>Under construction ...</h2>
       <style jsx>{`
         .container {

@@ -208,10 +208,10 @@ export default function RegistrationForm(props: RegistrationProps) {
           Register
         </button>
       </form>
-
+      {/* 
       <div>If you already have an account, then use:</div>
       <button onClick={() => props.setIsLogin(true)}>Log in</button>
-
+ */}
       <style jsx>
         {`
           .registration-form {

@@ -21,9 +21,12 @@ const DataTable: React.FC<DataTableProps> = ({ data, tableName }) => {
         <tbody>
           {data.map((row, index) => (
             <tr key={index}>
-              {Object.values(row).map((value: any, index) => (
-                <td key={index}>{value}</td>
-              ))}
+              {Object.entries(row).map(([key, value]: [string, any]) => {
+                if (key[0] === "date") {
+                  return <td key={key}>Datum</td>;
+                }
+                return <td key={key}>{value}</td>;
+              })}
             </tr>
           ))}
         </tbody>
