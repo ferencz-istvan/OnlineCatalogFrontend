@@ -3,6 +3,7 @@
 import HeaderComponent from "../components/HeaderComponent";
 import SideBarComponent from "../components/SideBarComponent";
 import { useState, useEffect } from "react";
+import StudentSidebar from "../students/StudentSideBar";
 
 interface StudentsLayoutProps {
   children: React.ReactNode;
@@ -31,8 +32,15 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
         handleNavbar={handleNavbar}
         role="student"
       ></HeaderComponent>
-      <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar} />
+      <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar}>
+        <StudentSidebar />
+      </SideBarComponent>
       <div className="main">{children}</div>
+      <style jsx>{`
+        .main {
+          padding: 10px 40px;
+        }
+      `}</style>
     </div>
   );
 };

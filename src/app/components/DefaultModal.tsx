@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 
 interface ModalProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   buttonName: string;
   children?: React.ReactElement<{
     setIsOpen: (isOpen: boolean) => void;
-  }> | null;
+  }>;
 }
 
-const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const DefaultModal: React.FC<ModalProps> = ({
+  buttonName,
+  isOpen,
+  setIsOpen,
+  children = null,
+}) => {
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -20,7 +25,6 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
 
   return (
     <div>
-      <button onClick={handleOpen}>{buttonName}</button>
       {isOpen && (
         <div className={`modal ${isOpen ? "modal-open" : ""}`}>
           <div className="modal-content">
@@ -29,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
             </span>
             <h4>{buttonName} modal:</h4>
             {/* {children} */}
-            {/* instead of children component we cen use the next snipped code */}
+            {/* instead of children component we can use the next snipped code */}
             {React.Children.map(children, (child) => {
               if (React.isValidElement(child)) {
                 return React.cloneElement(child, { setIsOpen: setIsOpen });
@@ -113,4 +117,4 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
   );
 };
 
-export default Modal;
+export default DefaultModal;

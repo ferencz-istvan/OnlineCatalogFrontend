@@ -97,9 +97,8 @@ export const useUserPublicData = create<userPublicData>((set) => ({
     ) as Partial<User> | null;
 
     const userId = actualUser?.user_id;
-    console.log("mégse akadtam meg");
-    console.log(userId);
-    console.log(actualUser?.role);
+    //console.log(userId);
+    //console.log(actualUser?.role);
     switch (actualUser?.role) {
       case "Student":
         roleText = "students";
@@ -116,8 +115,7 @@ export const useUserPublicData = create<userPublicData>((set) => ({
       default:
         return;
     }
-    console.log("itt vagyok ragyogok, mint a fekete szurok");
-    console.log(roleText);
+    //console.log(roleText);
 
     try {
       const url = `http://localhost:3000/srcbyuser/${roleText}/${userId}`;

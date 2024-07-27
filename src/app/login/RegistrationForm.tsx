@@ -23,6 +23,7 @@ export default function RegistrationForm(props: RegistrationProps) {
   const [regAddress, setRegAddress] = useState("");
   const [regClass, setRegClass] = useState("");
   const [regParentId, setRegParentId] = useState(0);
+  const [registrationResult, setRegistrationResult] = useState(0);
 
   const [classes, setClasses] = useState([] as Classes[]);
 
@@ -72,7 +73,8 @@ export default function RegistrationForm(props: RegistrationProps) {
       console.log(`User ID: ${userId}`);
     }); */
     try {
-      await userRegistration(newUser);
+      const result = await userRegistration(newUser);
+      setRegistrationResult(result as number);
     } catch (err) {
       console.error(err);
     }
@@ -208,6 +210,51 @@ export default function RegistrationForm(props: RegistrationProps) {
           Register
         </button>
       </form>
+      {registrationResult === 200 && (
+        <div className="modal">
+          <div>
+            <p>Registration successful</p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setRegistrationResult(0);
+              }}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      )}
+      {registrationResult === 409 && (
+        <div className="modal">
+          <div>
+            <p>This email address is already registered</p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setRegistrationResult(0);
+              }}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      )}
+      {registrationResult === 500 && (
+        <div className="modal">
+          <div>
+            <p>Something went wrong</p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setRegistrationResult(0);
+              }}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      )}
       {/* 
       <div>If you already have an account, then use:</div>
       <button onClick={() => props.setIsLogin(true)}>Log in</button>
@@ -242,6 +289,32 @@ export default function RegistrationForm(props: RegistrationProps) {
             margin: 15px;
             border-radius: 25px;
             cursor: pointer;
+          }
+          .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+
+          .modal > div {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
           }
         `}
       </style>

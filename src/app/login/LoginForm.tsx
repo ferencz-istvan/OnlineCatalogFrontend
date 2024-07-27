@@ -11,7 +11,26 @@ interface LoginProps {
 export default function LoginForm(props: LoginProps) {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [role, setRole] = useState("");
   const router = useRouter();
+
+  const routeToRole = (role: string) => {
+    //const role = JSON.parse(localStorage.getItem("actual_user") as string).role;
+    switch (role) {
+      case "Student":
+        router.push("/students");
+        break;
+      case "Teacher":
+        router.push("/teachers");
+        break;
+      case "Parent":
+        router.push("/parents");
+        break;
+      case "Admin":
+        router.push("/admin");
+        break;
+    }
+  };
 
   const clearLocalStorages = useUserPublicData(
     (state) => state.clearLocalStorage
@@ -65,7 +84,7 @@ export default function LoginForm(props: LoginProps) {
         setActualUser(fetchedUser);
         logActualUser();
         setActualRole();
-        //router.push("/about");
+        routeToRole(role); //instead of router.push("/about");
       }
     } catch (error) {
       console.error("Error in logging in", error);
@@ -99,16 +118,13 @@ export default function LoginForm(props: LoginProps) {
             console.log(`Email: ${loginEmail}\nPassword: ${loginPassword}`);
             sendLoginRequest();
             setActualRole();
+            //routeToRole();
           }}
         >
           Login
         </button>
       </form>
-      {/* 
-      <div>If you dont have already account, then use:</div>
-      <button onClick={() => props.setIsLogin(false)}>Registration</button>
-       <button onClick={getUsers}>getUsers</button>
-      */}
+
       <button onClick={clearLocalStorages}>Clear storage</button>
 
       <style jsx>

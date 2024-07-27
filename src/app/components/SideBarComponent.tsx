@@ -1,20 +1,28 @@
+import React from "react";
+import { ReactNode } from "react";
 import StudentSideBar from "../students/StudentSideBar";
 
 interface SideBarProps {
   isNavbar: boolean;
   handleNavbar: () => void;
+  children: ReactNode;
 }
 
-export default function SideBarComponent(props: SideBarProps) {
-  if (!props.isNavbar) {
+const SideBarComponent: React.FC<SideBarProps> = ({
+  isNavbar,
+  handleNavbar,
+  children,
+}) => {
+  if (!isNavbar) {
     return null;
   }
   return (
     <div className="nav-bar">
       <h1>Navigation:</h1>
-      <StudentSideBar />
 
-      <p style={{ cursor: "pointer" }} onClick={props.handleNavbar}>
+      {children}
+
+      <p style={{ cursor: "pointer" }} onClick={handleNavbar}>
         EXIT
       </p>
       <style jsx>
@@ -62,4 +70,6 @@ export default function SideBarComponent(props: SideBarProps) {
       </style>
     </div>
   );
-}
+};
+
+export default SideBarComponent;
