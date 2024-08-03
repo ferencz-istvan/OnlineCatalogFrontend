@@ -11,10 +11,6 @@ import EditSubject from "./EditSubject";
 function TeacherSubjects() {
   const [allSubject, setAllSubject] = useState([]);
 
-  function addNewElement() {
-    console.log("kocsog");
-  }
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const fetchSubjects = async () => {
@@ -40,6 +36,7 @@ function TeacherSubjects() {
         AddItemModal={AddSubject}
         EditItemModal={EditSubject}
         DeleteItemModal={DeleteSubject}
+        headerList={["name", "description"]}
       ></TableComponent>
       <div>
         <Modal buttonName="Modal test" />

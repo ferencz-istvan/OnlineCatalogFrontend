@@ -3,6 +3,7 @@
 import StudentsLayout from "../../layouts/studentsLayout";
 import TableComponent from "../../components/TableComponent";
 import { useState, useEffect } from "react";
+import CatalogColumn from "@/app/components/CatalogColumn";
 
 function StudentNotes() {
   const [notesOfStudent, setNotesOfStudent] = useState([]);
@@ -32,10 +33,32 @@ function StudentNotes() {
       <div>Hello</div>
       <div>Student Notes</div>
       <div>Hello</div>
+      <div className="catalog-online">
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+        <CatalogColumn />
+      </div>
+
       <TableComponent
         data={notesOfStudent}
         tableName="Notes of student"
       ></TableComponent>
+      <style jsx>{`
+        .catalog-online {
+          display: flex;
+          flex-direction: row;
+          overflow-x: scroll;
+          margin: 20px;
+        }
+      `}</style>
     </StudentsLayout>
   );
 }

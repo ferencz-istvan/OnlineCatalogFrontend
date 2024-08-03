@@ -30,8 +30,8 @@ const SideBarComponent: React.FC<SideBarProps> = ({
           .nav-bar {
             display: flex;
             flex-direction: column;
-            width: 270px;
-            background-color: darkviolet;
+            width: 260px;
+            background-color: darkslategrey;
             color: white;
             border-radius: 5% 30% 70% 5%;
             font-weight: 700;
@@ -56,7 +56,7 @@ const SideBarComponent: React.FC<SideBarProps> = ({
               width: 100vw;
               height: 100vh;
               border-radius: 0;
-              background-color: darkviolet;
+              background-color: darkslategrey;
               color: white;
               font-weight: 700;
               padding: 40px;

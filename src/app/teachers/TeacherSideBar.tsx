@@ -1,13 +1,14 @@
+"use client";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 function TeacherSidebar() {
   const router = useRouter();
   return (
-    <div>
+    <div className="sideBarElements">
       <div
         onClick={() => {
-          router.push("/teachers/notesandabsences");
+          router.push("/teachers/notes&absences");
         }}
       >
         Notes and absences
@@ -17,7 +18,7 @@ function TeacherSidebar() {
           router.push("/teachers/classes");
         }}
       >
-        Classes
+        My classes
       </div>
       <div
         onClick={() => {
@@ -33,6 +34,14 @@ function TeacherSidebar() {
       >
         About me
       </div>
+      <style jsx>
+        {`
+          .sideBarElements > div {
+            margin: 20px 0px;
+            cursor: pointer;
+          }
+        `}
+      </style>
     </div>
   );
 }

@@ -3,10 +3,11 @@ import { useState } from "react";
 
 interface AddSubjectProps {
   setIsOpen: (isOpen: boolean) => void;
-  id?: number;
+  data?: Record<string, any>;
 }
 
-const AddSubject: React.FC<AddSubjectProps> = ({ setIsOpen, id = 0 }) => {
+const AddSubject: React.FC<AddSubjectProps> = ({ setIsOpen, data = null }) => {
+  const id = data?.id;
   const [nameValue, setNameValue] = useState("name");
   const [descriptionValue, setDescriptionValue] = useState("description");
   const handleClose = () => {
@@ -61,28 +62,32 @@ const AddSubject: React.FC<AddSubjectProps> = ({ setIsOpen, id = 0 }) => {
         <br />
         <label htmlFor="description">Description of subject:</label>
         <br />
-        <input
-          type="text"
+        <textarea
           id="description"
           value={descriptionValue}
           onChange={(e) => setDescriptionValue(e.target.value)}
+          rows={7}
+          cols={50}
         />
+        <br />
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
-            console.log("ide jön a fetch");
-            console.log(`id for fetch ${id}`);
-            AddSubjectFetch()
+            await AddSubjectFetch()
               .then((responseData) => {
                 console.log("Response data:", responseData);
+                //setNameValue(responseData.name);
+                //setDescriptionValue(responseData.description);
               })
               .catch((error) => {
                 console.error("Error:", error);
               });
+
             handleClose();
+            location.reload();
           }}
         >
-          Ide jön a fetch
+          Add a new subject
         </button>
       </form>
     </div>

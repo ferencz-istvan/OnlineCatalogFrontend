@@ -86,7 +86,6 @@ export const useUserPublicData = create<userPublicData>((set) => ({
     ssrFriendlyStorage.clear();
   },
   setActualRole: async () => {
-    console.log("set actual role");
     if (!localStorage.getItem("actual_user")) {
       return;
     }
@@ -119,7 +118,6 @@ export const useUserPublicData = create<userPublicData>((set) => ({
 
     try {
       const url = `http://localhost:3000/srcbyuser/${roleText}/${userId}`;
-      console.log(url);
       const options = {
         method: "GET",
         headers: {
@@ -141,34 +139,3 @@ export const useUserPublicData = create<userPublicData>((set) => ({
     }
   },
 }));
-/* 
-const usePersistedUser = () => {
-  const [user, setUser] = useState<Partial<User> | null>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  }, [user]);
-
-  return user;
-};
-
-const setActualUser = (fetchedUser: Partial<User>) => {
-  useUserPublicData.setState({ actual_user: fetchedUser });
-  usePersistedUser(fetchedUser);
-};
-
-const logActualUser = () => {
-  const user = usePersistedUser();
-  console.log("Actual user:");
-  console.log(user);
-};
- */
