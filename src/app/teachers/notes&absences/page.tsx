@@ -61,7 +61,7 @@ function TeacherNotesAndAbsences() {
             key={index}
             className="containerElement"
           >
-            <span>{item?.subject}</span>
+            <span>{item?.subject.toUpperCase()}</span>
             <span>in {item.class}</span>
           </div>
         ))}

@@ -124,12 +124,12 @@ const CatalogPage = () => {
                 absences={absencesOfClass.filter(
                   (absence) => absence.student_id === student.id
                 )}
+                student_id={student.id}
               />
             </div>
           ))}
         </div>
       )}
-      <CatalogColumn nameProp="Hali Lali" />
       <style jsx>
         {`
           .catalogContainer {

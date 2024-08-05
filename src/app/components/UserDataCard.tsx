@@ -26,6 +26,7 @@ export default function UserCard() {
         <h3>Role: {actualUser?.role}</h3>
       </div>
       <div className="card-right-side">
+        <img src="/icons/user.svg" alt="user icon in user card" height={60} />
         <Modal buttonName="Edit datas">
           <SetUserDatasForm
             setIsOpen={function (isOpen: boolean): void {

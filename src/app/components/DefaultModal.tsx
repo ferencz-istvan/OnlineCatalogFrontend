@@ -31,7 +31,7 @@ const DefaultModal: React.FC<ModalProps> = ({
             <span className="close" onClick={handleClose}>
               &times;
             </span>
-            <h4>{buttonName} modal:</h4>
+            <h3>{buttonName}</h3>
             {/* {children} */}
             {/* instead of children component we can use the next snipped code */}
             {React.Children.map(children, (child) => {
@@ -45,6 +45,9 @@ const DefaultModal: React.FC<ModalProps> = ({
       )}
       <style jsx>{`
         /* The modal */
+        h3 {
+          margin: 25px;
+        }
         .modal {
           position: fixed; /* Stay in place */
           z-index: 1; /* Sit on top */
