@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { create } from "zustand";
 
 type Student = {
@@ -17,8 +18,14 @@ type StudentStore = {
 export const useStudentStore = create<StudentStore>((set) => ({
   students: [],
   getSudents: async () => {
+    const accessToken = localStorage.getItem("accessToken") as string;
     try {
-      const response = await fetch("http://localhost:3000/students");
+      const response = await fetch("http://localhost:3000/students", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       const data = await response.json();
       set({ students: data });
     } catch (error) {

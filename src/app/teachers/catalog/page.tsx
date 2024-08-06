@@ -2,35 +2,14 @@
 import React, { useState, useEffect } from "react";
 import TeachersLayout from "../../layouts/teachersLayout";
 import CatalogColumn from "@/app/components/CatalogColumn";
-
-interface Student {
-  id: number;
-  name: string;
-  class_id: number;
-  parent_id: number;
-  address: string;
-}
-
-interface Note {
-  id: number;
-  value: number;
-  student_id: number;
-  subject_id: number;
-  date: string;
-}
-
-interface Absence {
-  id: number;
-  status: string;
-  student_id: number;
-  subject_id: number;
-  date: string;
-}
+import type { Student, Note, Absence } from "@/app/interfaces/baseInterfaces";
 
 const CatalogPage = () => {
   const [classId, setClassId] = useState(0);
+  const [className, setClassName] = useState("");
   const [subjectId, setSubjectId] = useState(0);
-  const [teacherId, setTeacherId] = useState(0);
+  const [subjectName, setSubjectName] = useState("");
+  //const [teacherId, setTeacherId] = useState(0);
   const [studentsOfClass, setStudentsOfClass] = useState<Student[]>([]);
   const [notesOfClass, setNotesOfClass] = useState<Note[]>([]);
   const [absencesOfClass, setAbsencesOfClass] = useState<Absence[]>([]);
@@ -81,14 +60,16 @@ const CatalogPage = () => {
     const data = await response.json();
     setAbsencesOfClass(data);
     setIsAbsencesLoaded(true);
-    console.log("list of absences:");
-    console.log(data);
   };
 
   useEffect(() => {
-    setClassId(parseInt(localStorage.getItem("class_id") as string));
-    setSubjectId(parseInt(localStorage.getItem("subject_id") as string));
-    setTeacherId(JSON.parse(localStorage.getItem("actual_role") as string).id);
+    setClassId(JSON.parse(localStorage.getItem("class_data") as string).id);
+    setClassName(JSON.parse(localStorage.getItem("class_data") as string).name);
+    setSubjectId(JSON.parse(localStorage.getItem("subject_data") as string).id);
+    setSubjectName(
+      JSON.parse(localStorage.getItem("subject_data") as string).name
+    );
+    //setTeacherId(JSON.parse(localStorage.getItem("actual_role") as string).id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -108,9 +89,14 @@ const CatalogPage = () => {
   return (
     <TeachersLayout>
       <h2>Catalog page</h2>
-      <p>Class_id: {classId}</p>
-      <p>Subject_id: {subjectId}</p>
-      <p>Teacher_id: {teacherId}</p>
+      <div className="header-info">
+        <h3>Class: {className}</h3>
+        <h3>Subject: {subjectName}</h3>
+        <h3>
+          Teacher:{" "}
+          {JSON.parse(localStorage.getItem("actual_role") as string).name}
+        </h3>
+      </div>
       <br />
       {isLoaded && (
         <div className="catalogContainer">
@@ -125,6 +111,7 @@ const CatalogPage = () => {
                   (absence) => absence.student_id === student.id
                 )}
                 student_id={student.id}
+                index={index + 1}
               />
             </div>
           ))}
@@ -135,6 +122,24 @@ const CatalogPage = () => {
           .catalogContainer {
             display: flex;
             overflow-x: scroll;
+          }
+          .header-info {
+            display: flex;
+          }
+          .header-info > * {
+            margin-right: 50px;
+            background-color: darkseagreen;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 3px 3px 10px darkslategray;
+          }
+          @media only screen and (max-width: 700px) {
+            .header-info {
+              flex-direction: column;
+            }
+            .header-info > * {
+              margin: 2px;
+            }
           }
         `}
       </style>

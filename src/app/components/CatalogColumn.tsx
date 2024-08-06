@@ -5,28 +5,14 @@ import AbsenceModal from "../teachers/catalog/AbsenceModal";
 import AddNoteModal from "../teachers/catalog/AddNote";
 import AddAbsenceModal from "../teachers/catalog/AddAbsence";
 import NoteModal from "../teachers/catalog/NoteModal";
-
-interface Note {
-  id: number;
-  value: number;
-  student_id: number;
-  subject_id: number;
-  date: string;
-}
-
-interface Absence {
-  id: number;
-  status: string;
-  student_id: number;
-  subject_id: number;
-  date: string;
-}
+import type { Note, Absence } from "../interfaces/baseInterfaces";
 
 interface CatalogColumnProps {
   nameProp?: string;
   notes?: Note[];
   absences?: Absence[];
   student_id?: number;
+  index?: number;
 }
 
 const CatalogColumn: React.FC<CatalogColumnProps> = ({
@@ -34,6 +20,7 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
   notes = null,
   absences = null,
   student_id = 0,
+  index = 0,
 }) => {
   const [role, setRole] = useState(
     JSON.parse(localStorage.getItem("actual_user") as string).role
@@ -59,7 +46,9 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
   return (
     <div>
       <div className="subject-column">
-        <div className="header">{nameProp ? nameProp : "Subject name"}</div>
+        <div className="header">
+          {nameProp ? `${index}. ${nameProp}` : "Subject name"}
+        </div>
         {notes && (
           <div className="notes">
             {role === "Teacher" && (
@@ -168,6 +157,7 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
           background-color: darkslategray;
           padding: 10px 5px;
           min-width: 200px;
+          min-height: 500px;
         }
         .subject-column > div {
           text-align: center;
@@ -212,21 +202,24 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
           background-color: darkseagreen;
           color: darkslategray;
           border: 3px solid darkslategray;
-          border-radius: 15px;
+          border-radius: 12px;
           cursor: pointer;
+          padding: 3px;
         }
         .unverified {
           margin: 10px;
           background-color: pink;
           border: 3px solid red;
-          border-radius: 15px;
+          border-radius: 12px;
           cursor: pointer;
+          padding: 3px;
         }
         .deleted {
           margin: 10px;
           background-color: lightgray;
           color: darkgray;
-          border-radius: 15px;
+          border-radius: 12px;
+          padding: 3px;
         }
         .mean {
           grid-area: mean;

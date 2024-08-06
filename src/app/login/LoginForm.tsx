@@ -145,7 +145,7 @@ export default function LoginForm(props: LoginProps) {
             padding: 15px;
             margin: 10px;
             border-radius: 30px;
-            border: 0;
+            border: 2px solid transparent;
           }
 
           input:focus-visible {

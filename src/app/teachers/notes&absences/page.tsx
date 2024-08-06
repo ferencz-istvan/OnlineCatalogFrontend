@@ -42,11 +42,23 @@ function TeacherNotesAndAbsences() {
     }, 1000); */
   }, []);
 
-  function pushToCatalog(subject_id: number, class_id: number) {
-    const stringSubjectId = subject_id.toString();
-    const stringClassId = class_id.toString();
-    localStorage.setItem("subject_id", stringSubjectId);
-    localStorage.setItem("class_id", stringClassId);
+  /*   function pushToCatalog(catalogInfo: Relation) {
+    const { subject, subject_id, class:className, class_id } = catalogInfo;
+    //const stringClassId = catalogInfo.class_id.toString();
+    const stringSubjectDatas = JSON.stringify{ name: subject, id: subject_id }
+        const stringSubjectDatas = JSON.stringify{name: class, id: class_id}
+    localStorage.setItem("subject_data", stringSubjectDatas);
+    localStorage.setItem("class_data", stringClassDatas);
+
+    router.push("/teachers/catalog");
+  } */
+  function pushToCatalog(catalogInfo: Relation) {
+    const { subject, subject_id, class: className, class_id } = catalogInfo;
+    const subjectData = JSON.stringify({ name: subject, id: subject_id });
+    const classData = JSON.stringify({ name: className, id: class_id });
+
+    localStorage.setItem("subject_data", subjectData);
+    localStorage.setItem("class_data", classData);
 
     router.push("/teachers/catalog");
   }
@@ -57,7 +69,14 @@ function TeacherNotesAndAbsences() {
       <div className="classContainer">
         {relationsOfTeacherRef.current.map((item, index) => (
           <div
-            onClick={() => pushToCatalog(item?.subject_id, item?.class_id)}
+            onClick={() =>
+              pushToCatalog({
+                subject: item?.subject,
+                subject_id: item?.subject_id,
+                class: item?.class,
+                class_id: item?.class_id,
+              })
+            }
             key={index}
             className="containerElement"
           >
@@ -69,6 +88,12 @@ function TeacherNotesAndAbsences() {
       <div>
         <Modal buttonName="Modal test" />
       </div>
+      <img
+        src="/icons/catalogColumn.svg"
+        alt="image about a column is the catalog"
+        width="300px"
+      />
+
       <style jsx>{`
         .classContainer {
           display: flex;
@@ -79,8 +104,8 @@ function TeacherNotesAndAbsences() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 320px;
-          height: 200px;
+          width: 300px;
+          height: 180px;
           background-color: darkseagreen;
           border-radius: 30px;
           cursor: pointer;

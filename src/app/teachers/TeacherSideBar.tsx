@@ -39,6 +39,7 @@ function TeacherSidebar() {
           .sideBarElements > div {
             margin: 20px 0px;
             cursor: pointer;
+            font-size: 20px;
           }
         `}
       </style>

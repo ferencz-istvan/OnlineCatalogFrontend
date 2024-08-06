@@ -255,10 +255,6 @@ export default function RegistrationForm(props: RegistrationProps) {
           </div>
         </div>
       )}
-      {/* 
-      <div>If you already have an account, then use:</div>
-      <button onClick={() => props.setIsLogin(true)}>Log in</button>
- */}
       <style jsx>
         {`
           .registration-form {
@@ -277,7 +273,7 @@ export default function RegistrationForm(props: RegistrationProps) {
             padding: 15px;
             margin: 10px;
             border-radius: 30px;
-            border: 0;
+            border: 2px solid transparent;
           }
 
           input:focus-visible {
@@ -302,7 +298,6 @@ export default function RegistrationForm(props: RegistrationProps) {
             align-items: center;
             z-index: 1000;
           }
-
           .modal > div {
             background-color: #fff;
             padding: 20px;
@@ -315,6 +310,10 @@ export default function RegistrationForm(props: RegistrationProps) {
             display: flex;
             flex-direction: column;
             align-items: center;
+          }
+          select {
+            padding: 3px;
+            border-radius: 6px;
           }
         `}
       </style>

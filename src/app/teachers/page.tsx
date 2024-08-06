@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TeachersLayout from "../layouts/teachersLayout";
 import { User } from "../../lib/loginData";
 import { Student } from "../../lib/loginData";
@@ -11,6 +11,44 @@ import UserCard from "../components/UserDataCard";
 function TeacherView() {
   const [actualUser, setActualUser] = useState<Partial<User> | null>(null);
   const [actualRole, setActualRole] = useState<Partial<Student> | null>(null);
+  //const relationsOfTeacherRef = useRef([]);
+  const relationsOfTeacherRef = useRef<{ subject: string }[]>([]);
+  const [isActualRoleLoaded, setIsActualRoleLoaded] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("actual_user");
+    const storedRole = localStorage.getItem("actual_role");
+
+    if (storedUser) {
+      setActualUser(JSON.parse(storedUser) as Partial<User> | null);
+    }
+
+    if (storedRole) {
+      setActualRole(JSON.parse(storedRole) as Partial<Student> | null);
+      setIsActualRoleLoaded(true);
+    }
+  }, []);
+  useEffect(() => {
+    if (isActualRoleLoaded && actualRole) {
+      const teacher_id = actualRole.id;
+      const accessToken = localStorage.getItem("accessToken");
+      const fetchRelations = async () => {
+        const response = await fetch(
+          `http://localhost:3000/relations/withTeacher/${teacher_id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const data = await response.json();
+        relationsOfTeacherRef.current = data;
+        //setIsLoaded(true);
+      };
+      fetchRelations();
+    }
+  }, [isActualRoleLoaded, actualRole]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("actual_user");
@@ -38,25 +76,27 @@ function TeacherView() {
           </Modal>
         </div>
         <UserCard />
-        <h1>User datas:</h1>
-        <h3>Username: {actualUser?.username}</h3>
-        <h3>Email: {actualUser?.email}</h3>
-        <h3>Role: {actualUser?.role}</h3>
-        <br />
-        <div className="student-card">
+        <div className="image-container">
+          <img
+            id="center-img"
+            src="/icons/magnifier.svg"
+            alt="user icon in user card"
+          />
+        </div>
+        <div className="role-card">
           <div className="card-left-side">
-            <h2>Student datas:</h2>
+            <h2>Teacher datas:</h2>
             <h3>Matriculation number: {actualRole?.id} </h3>
             <h3>Full name: {actualRole?.name}</h3>
-            <h3>Class: {actualRole?.class_name}</h3>
-            <h3>Parent: {actualRole?.parent_name}</h3>
-            <h3>Address: {actualRole?.address}</h3>
+            <h3>
+              Subjects (s)he teaches:{" "}
+              {relationsOfTeacherRef.current.map((relation, index) => (
+                <span key={index}>{relation.subject} </span>
+              ))}
+            </h3>
+            <h3>Classes: {actualRole?.class_name}</h3>
           </div>
-          <div className="card-right-side">
-            {/*   <Modal buttonName="Edit">
-              <SetStudentDatasForm />
-            </Modal> */}
-          </div>
+          <div className="card-right-side"></div>
         </div>
       </div>
       <style jsx>
@@ -64,10 +104,20 @@ function TeacherView() {
           .container {
             padding: 70px;
           }
+          .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+            max-height: 300px;
+          }
+          #center-img {
+            animation: pulse 6s infinite;          
+          }
           button {
             margin-right: 20px;
           }
-          .student-card {
+          .role-card {
             background-color: DarkSeaGreen;
             margin: 20px;
             padding: 30px;
@@ -78,15 +128,29 @@ function TeacherView() {
           .card-left-side {
             display: flex;
             flex-direction: column;
-            width: 60%;
+            width: 95%;
           }
           .card-right-side {
             display: flex;
             justify-content: flex-end;
-            width: 40%;
+            width: 5%;
+          }
+          @keyframes pulse {
+          0% {
+            max-height: 80%;
+            max-width: 80%;
+          }
+          50% {
+            max-height: 100%;
+            max-width: 100%;
+          }
+          100% {
+            max-height: 80%;
+            max-width: 80%;
+          }
           }
           @media only screen and (max-width: 700px) {
-          .student-card {
+          .role-card {
             flex-direction: column;
             align-items: center;
             margin: 5px;
