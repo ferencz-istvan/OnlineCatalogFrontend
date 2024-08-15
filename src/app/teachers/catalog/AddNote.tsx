@@ -27,7 +27,8 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
       const data = {
         value: gradeForNote,
         student_id: student_id,
-        subject_id: localStorage.getItem("subject_id"),
+        subject_id: JSON.parse(localStorage.getItem("subject_data") as string)
+          .id,
         date: dateForNote,
       };
       console.log(data);
@@ -90,7 +91,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
                   console.error("Error:", error);
                 });
               setIsOpen(false);
-              location.reload();
+              //location.reload();
             }}
           >
             Add note

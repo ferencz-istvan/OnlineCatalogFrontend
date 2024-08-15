@@ -26,7 +26,8 @@ const AddAbsenceModal: React.FC<AddAbsenceModalProps> = ({
       const data = {
         status: "unverified",
         student_id: student_id,
-        subject_id: localStorage.getItem("subject_id"),
+        subject_id: JSON.parse(localStorage.getItem("subject_data") as string)
+          .id,
         date: dateForNote,
       };
       console.log(data);
@@ -78,7 +79,7 @@ const AddAbsenceModal: React.FC<AddAbsenceModalProps> = ({
                   console.error("Error:", error);
                 });
               setIsOpen(false);
-              location.reload();
+              //location.reload();
             }}
           >
             Add absence

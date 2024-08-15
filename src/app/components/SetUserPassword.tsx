@@ -140,7 +140,17 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
           )}
         </form>
       </div>
-      <div></div>
+      <style jsx>{`
+        button {
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        button:hover {
+          box-shadow: 3px 3px 8px darkslategray;
+        }
+      `}</style>
     </div>
   );
 };

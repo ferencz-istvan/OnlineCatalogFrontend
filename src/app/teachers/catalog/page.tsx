@@ -86,6 +86,13 @@ const CatalogPage = () => {
     }
   }, [isStudentsLoaded, isNotesLoaded, isAbsencesLoaded]);
 
+  function getLocalStorage() {
+    if (typeof window != "undefined") {
+      return window.localStorage;
+    }
+    return null;
+  }
+
   return (
     <TeachersLayout>
       <h2>Catalog page</h2>
@@ -94,12 +101,15 @@ const CatalogPage = () => {
         <h3>Subject: {subjectName}</h3>
         <h3>
           Teacher:{" "}
-          {JSON.parse(localStorage.getItem("actual_role") as string).name}
+          {
+            //JSON.parse(localStorage.getItem("actual_role") as string).name
+          }
+          {JSON.parse(getLocalStorage()?.getItem("actual_role") as string).name}
         </h3>
       </div>
       <br />
       {isLoaded && (
-        <div className="catalogContainer">
+        <div className="catalog-container">
           {studentsOfClass.map((student, index) => (
             <div key={index}>
               <CatalogColumn
@@ -119,9 +129,11 @@ const CatalogPage = () => {
       )}
       <style jsx>
         {`
-          .catalogContainer {
+          .catalog-container {
             display: flex;
             overflow-x: scroll;
+            border: solid 3px black;
+            border-radius: 10px;
           }
           .header-info {
             display: flex;
@@ -131,7 +143,10 @@ const CatalogPage = () => {
             background-color: darkseagreen;
             padding: 8px;
             border-radius: 4px;
-            box-shadow: 3px 3px 10px darkslategray;
+             {
+              /* box-shadow: 3px 3px 10px darkslategray; */
+            }
+            border: 3px solid darkslategray;
           }
           @media only screen and (max-width: 700px) {
             .header-info {

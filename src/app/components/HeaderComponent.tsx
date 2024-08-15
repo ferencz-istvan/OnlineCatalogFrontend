@@ -39,15 +39,26 @@ export default function HeaderComponent(props: HeaderComponentProps) {
   return (
     <div>
       <div className="normal-header">
-        <div className="grid-item pointer" onClick={props.handleNavbar}>
-          NavBar
+        <div className="grid-item-menu pointer" onClick={props.handleNavbar}>
+          <img
+            src="/icons/hamburgerMenuWhite.svg"
+            alt="white hamburger menu"
+            height={50}
+          />
         </div>
         <div className="grid-item">
           Online Catalog{forTextFunction(props.role)}
         </div>
         <div className="grid-item">
           <Link onClick={clearLocalStorage} href="/login">
-            <span className="link-text">Log Out</span>
+            <div className="log-out">
+              <span className="link-text">Log Out </span>{" "}
+              <img
+                src="/icons/logOutWhite.svg"
+                alt="logout image"
+                height={45}
+              />
+            </div>
           </Link>
         </div>
       </div>
@@ -57,14 +68,21 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             className={isTricky ? "tricky-item pointer" : "hidden-item"}
             onClick={props.handleNavbar}
           >
-            NavBar
+            <img
+              src="/icons/hamburgerMenu.svg"
+              alt="black hamburger menu"
+              height={50}
+            />
           </div>
           <div className={isTricky ? "tricky-item" : "hidden-item"}>
             Online Catalog
           </div>
           <div className={isTricky ? "tricky-item" : "hidden-item"}>
             <Link onClick={clearLocalStorage} href="/login">
-              Log out
+              <div className="log-out">
+                <span className="link-text">Log Out </span>{" "}
+                <img src="/icons/logOut.svg" alt="logout image" height={45} />
+              </div>
             </Link>
           </div>
         </div>
@@ -88,6 +106,12 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             font-size: 1.6em;
             color: white;
             font-weight: 600;
+          }
+          .grid-item-menu {
+            font-size: 1.6em;
+            color: white;
+            font-weight: 700;
+            display: flex;
           }
           .tricky-header {
             position: fixed;
@@ -133,6 +157,15 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             font-weight: 500;
             transition: all 300ms linear 200ms;
             cursor: pointer;
+          }
+          .log-out {
+            display: flex;
+            align-items: center;
+          }
+          @media only screen and (max-width: 800px) {
+            .link-text {
+              display: none;
+            }
           }
         `}
       </style>

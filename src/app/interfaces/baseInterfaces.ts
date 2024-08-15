@@ -23,4 +23,37 @@ interface Student {
   address: string;
 }
 
-export type { Note, Absence, Student };
+interface Subject {
+  id: number;
+  description: string;
+  name: string;
+}
+interface SchoolClass {
+  id: number;
+  name: string;
+  grade: number;
+  specialty: string;
+  conductor_id: number;
+}
+interface Teacher {
+  id: number;
+  name: string;
+  user_id: number;
+}
+
+interface Parent {
+  id: number;
+  name: string;
+  phone_number: string;
+  user_id: number;
+}
+
+/* interface User {
+  user_id: number;
+  role: string;
+  email: string;
+  username: string;
+  Password: string;
+} */
+
+export type { Note, Absence, Student, Subject, SchoolClass, Teacher, Parent };

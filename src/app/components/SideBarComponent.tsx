@@ -22,11 +22,18 @@ const SideBarComponent: React.FC<SideBarProps> = ({
 
       {children}
 
-      <p style={{ cursor: "pointer" }} onClick={handleNavbar}>
+      <div className="exit-button" onClick={handleNavbar}>
         EXIT
-      </p>
+      </div>
       <style jsx>
         {`
+          .exit-button {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 10px 0px;
+          }
           .nav-bar {
             display: flex;
             flex-direction: column;
@@ -41,11 +48,8 @@ const SideBarComponent: React.FC<SideBarProps> = ({
             top: 20%;
             left: 0;
             filter: drop-shadow(0 0 0.3rem black);
-             {
-              /*  filter: drop-shadow(0 -6mm 4mm rgb(160, 0, 210)); */
-            }
           }
-          .nav-bar > * {
+          h1 {
             color: lightgreen;
           }
           @media only screen and (max-width: 700px) {
@@ -64,6 +68,17 @@ const SideBarComponent: React.FC<SideBarProps> = ({
               position: fixed;
               top: 0;
               left: 0;
+              background-image: linear-gradient(
+                -70deg,
+                red,
+                darkslategray,
+                darkslategray
+              );
+            }
+            .exit-button {
+              font-size: 7vh;
+              display: flex;
+              justify-content: center;
             }
           }
         `}

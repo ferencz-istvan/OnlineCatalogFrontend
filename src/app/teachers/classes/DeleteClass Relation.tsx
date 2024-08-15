@@ -73,7 +73,7 @@ const DeleteSubject: React.FC<DeleteSubjectProps> = ({
     }); */
 
   return (
-    <div>
+    <div className="modal-content-container">
       <p>Are you sure to delete this element?</p>
       {dataForFetch &&
         Object.entries(dataForFetch).map(([key, value]: [string, any]) => {
@@ -84,22 +84,54 @@ const DeleteSubject: React.FC<DeleteSubjectProps> = ({
           );
         })}
       <div>teacher_id: {typeof teacherIdForDelete}</div>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          DeleteSubjectFetch()
-            .then((responseData) => {
-              console.log("Response delete data:", responseData);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-          handleClose();
-          /* location.reload(); */
-        }}
-      >
-        Delete this relation
-      </button>
+      <div className="modal-button-container">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            DeleteSubjectFetch()
+              .then((responseData) => {
+                console.log("Response delete data:", responseData);
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+            handleClose();
+            /* location.reload(); */
+          }}
+        >
+          Delete this relation
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleClose();
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+      <style jsx>{`
+        button {
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        button:hover {
+          box-shadow: 3px 3px 8px darkslategray;
+        }
+        .modal-content-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .modal-button-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin: 10px;
+        }
+      `}</style>
     </div>
   );
 };

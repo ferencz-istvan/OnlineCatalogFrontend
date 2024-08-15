@@ -18,8 +18,6 @@ const setCount = () => {
 
 const logActualUser = () => {
   const user = useUserPublicData.getState().actual_user;
-  console.log("Actual user:");
-  console.log(user);
 };
 
 function OtherComponent({ count }: { count: number }): JSX.Element {

@@ -56,8 +56,10 @@ export default function Home() {
         </div>
       </div>
       <p className={styles.footer}>
-        For onlyne catalog web app, icons was used from next webpage:
-        https://www.svgrepo.com/svg/520501/schedule
+        For online catalog web app, icons was used from next webpage:
+        <a href="https://www.svgrepo.com/svg/520501/schedule" target="_blank">
+          https://www.svgrepo.com/svg/520501/schedule
+        </a>
       </p>
     </main>
   );

@@ -30,11 +30,33 @@ export default function Login() {
         </div>
       </div>
       <footer>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa veritatis
-        voluptas tenetur quia inventore qui ipsam molestias! Sequi reiciendis
-        aut vitae recusandae quasi sed soluta quae illo maxime incidunt?
-        Adipisci hic veritatis impedit modi voluptatibus ipsum laborum quasi
-        consequatur ad.
+        <h4>Discover the Online Catalog for Teachers, Students, and Parents</h4>
+        <p>
+          Our online gradebook is designed with one purpose in mind: to
+          efficiently store grades and attendance records. We’ve stripped away
+          the unnecessary bells and whistles, so you won’t waste time navigating
+          through useless features. Teachers and students can focus solely on
+          what matters - managing grades and tracking attendance.
+        </p>
+        <p>What Makes Our Gradebook Different?</p>
+        <ul>
+          <li>
+            No Unnecessary Features: Just the essentials - grades and
+            attendance, nothing more.
+          </li>
+          <li>
+            Streamlined Experience: A clean, simple interface that makes it easy
+            to find exactly what you need.
+          </li>
+          <li>
+            Efficient and Effective: Spend less time on admin tasks and more
+            time on teaching and learning.
+          </li>
+        </ul>
+        <p>
+          Choose a gradebook that’s as focused as you are. Simplify your
+          workflow and keep your attention where it belongs.
+        </p>
       </footer>
       <style jsx>{`
         .container {

@@ -8,6 +8,7 @@ import Modal from "@/app/components/CustomModal";
 import TestModal from "@/app/components/JustTestComponent";
 import UserCard from "../components/UserDataCard";
 import SetStudentDatasForm from "./SetStudentDatas";
+import Link from "next/link";
 
 function StudentView() {
   const [actualUser, setActualUser] = useState<Partial<User> | null>(null);
@@ -29,7 +30,7 @@ function StudentView() {
   return (
     <StudentsLayout>
       <div className="container">
-        <div>
+        {/* <div>
           <Modal buttonName="Testmodal button">
             <TestModal
               setIsOpen={function (isOpen: boolean): void {
@@ -37,13 +38,18 @@ function StudentView() {
               }}
             />
           </Modal>
-        </div>
+        </div> */}
+        <Link href="/students/notes&absences">
+          <button>Go to my notes</button>
+        </Link>
         <UserCard />
-        <h1>User datas:</h1>
-        <h3>Username: {actualUser?.username}</h3>
-        <h3>Email: {actualUser?.email}</h3>
-        <h3>Role: {actualUser?.role}</h3>
-        <br />
+        <div className="image-container">
+          <img
+            id="center-img"
+            src="/icons/magnifier.svg"
+            alt="user icon in user card"
+          />
+        </div>
         <div className="student-card">
           <div className="card-left-side">
             <h2>Student datas:</h2>
@@ -62,15 +68,48 @@ function StudentView() {
       </div>
       <style jsx>
         {`
+          button {
+           
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+          animation: move-horizontal 3s linear infinite;
+          }
+          button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+            animation-play-state: paused;
+          }
+          @keyframes move-horizontal {
+          0% {
+            margin-left: 10px;
+          }
+          40% {
+            margin-left: 20px;
+          }
+          100% {
+            margin-left: 10px; 
+          }
+          }
           .container {
-            padding: 70px;
+            padding: 0px 70px;
             {/* background-color: pink; */}
+          }
+          .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+            max-height: 300px;
+          }
+          #center-img {
+            animation: pulse 6s infinite;          
           }
           button {
             margin-right: 20px;
           }
           .student-card {
-            background-color: DarkSeaGreen;
+            background-image: linear-gradient(-70deg,  cadetblue, darkseagreen, slategray);
             margin: 20px;
             padding: 30px;
             border: 4px solid darkslategray;
@@ -87,6 +126,20 @@ function StudentView() {
             justify-content: flex-end;
             width: 40%;
           }
+           @keyframes pulse {
+          0% {
+            max-height: 80%;
+            max-width: 80%;
+          }
+          50% {
+            max-height: 100%;
+            max-width: 100%;
+          }
+          100% {
+            max-height: 80%;
+            max-width: 80%;
+          }
+          }
           @media only screen and (max-width: 700px) {
           .student-card {
             flex-direction: column;
@@ -101,6 +154,7 @@ function StudentView() {
             width: 100%;
            align-items: center;
         }
+        
         `}
       </style>
     </StudentsLayout>

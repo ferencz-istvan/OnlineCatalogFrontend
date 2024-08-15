@@ -22,9 +22,10 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
   student_id = 0,
   index = 0,
 }) => {
-  const [role, setRole] = useState(
+  /*  const [role, setRole] = useState(
     JSON.parse(localStorage.getItem("actual_user") as string).role
-  );
+  ); */
+  const [role, setRole] = useState("");
   const [isOpenNote, setIsOpenNote] = useState(false);
   const [isOpenAbsence, setIsOpenAbsence] = useState(false);
   const [isOpenAddNote, setIsOpenAddNote] = useState(false);
@@ -43,13 +44,23 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
     subject_id: 0,
     date: "",
   });
+
+  useEffect(() => {
+    const actualUser = localStorage.getItem("actual_user");
+    //stateRole = JSON.parse(
+    //localStorage.getItem("actual_user") as string
+    //).role;
+    if (actualUser) {
+      setRole(JSON.parse(actualUser).role);
+    }
+  }, []);
   return (
     <div>
       <div className="subject-column">
         <div className="header">
           {nameProp ? `${index}. ${nameProp}` : "Subject name"}
         </div>
-        {notes && (
+        {notes ? (
           <div className="notes">
             {role === "Teacher" && (
               <div className="addAbs" onClick={() => setIsOpenAddNote(true)}>
@@ -69,8 +80,10 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
               </div>
             ))}
           </div>
+        ) : (
+          <div>Space for notes</div>
         )}
-        {absences && (
+        {absences ? (
           <div className="absences">
             {role === "Teacher" && (
               <div className="addAbs" onClick={() => setIsOpenAddAbsence(true)}>
@@ -92,6 +105,8 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
               </div>
             ))}
           </div>
+        ) : (
+          <div>Space for absences</div>
         )}
         <div className="mean">
           {(notes ?? []).length > 0
@@ -167,6 +182,7 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
         }
         .header {
           grid-area: header;
+          border-radius: 10px;
         }
         .addAbs {
           color: white;
@@ -181,6 +197,7 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
         }
         .notes {
           grid-area: notes;
+          border-radius: 10px;
         }
         .oneNote {
           padding: 5px;
@@ -190,6 +207,7 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
         }
         .absences {
           grid-area: absences;
+          border-radius: 10px;
         }
         .absence {
           margin: 10px;

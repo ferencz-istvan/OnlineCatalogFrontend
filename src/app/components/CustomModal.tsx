@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
             <span className="close" onClick={handleClose}>
               &times;
             </span>
-            <h4>{buttonName} modal:</h4>
+            <h4 className="modla-title">{buttonName} modal:</h4>
             {/* {children} */}
             {/* instead of children component we cen use the next snipped code */}
             {React.Children.map(children, (child) => {
@@ -40,6 +40,10 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
         </div>
       )}
       <style jsx>{`
+        .modal-title {
+          color: black;
+          margin: 20px;
+        }
         /* The modal */
         .modal {
           position: fixed; /* Stay in place */
@@ -65,8 +69,8 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
           margin: 20% auto; /* 15% from the top and centered */
           padding: 20px;
           border: 1px solid #888;
-          width: 80%; /* Could be more or less, depending on screen size */
-          max-width: 1200px;
+          width: 80%;
+          max-width: 800px;
           border-radius: 30px;
         }
 

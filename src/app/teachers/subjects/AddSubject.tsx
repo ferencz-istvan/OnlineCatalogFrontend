@@ -90,6 +90,19 @@ const AddSubject: React.FC<AddSubjectProps> = ({ setIsOpen, data = null }) => {
           Add a new subject
         </button>
       </form>
+      <style jsx>
+        {`
+          button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+          button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+          }
+        `}
+      </style>
     </div>
   );
 };

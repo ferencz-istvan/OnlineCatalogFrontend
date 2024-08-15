@@ -83,7 +83,7 @@ const EditSubject: React.FC<EditSubjectProps> = ({
   }, [id]);
   return (
     <div>
-      <p>Editing the item: </p>
+      <h4>Editing the item: </h4>
       <form>
         <label htmlFor="name">Name:</label>
         <br />
@@ -104,7 +104,6 @@ const EditSubject: React.FC<EditSubjectProps> = ({
           cols={50}
         />
         <br />
-        <br />
       </form>
       <button
         onClick={(e) => {
@@ -124,6 +123,19 @@ const EditSubject: React.FC<EditSubjectProps> = ({
       >
         Change
       </button>
+      <style jsx>
+        {`
+          button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+          button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+          }
+        `}
+      </style>
     </div>
   );
 };

@@ -72,6 +72,27 @@ const DeleteSubject: React.FC<DeleteSubjectProps> = ({
       >
         Delete this element
       </button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          handleClose();
+        }}
+      >
+        Cancel
+      </button>
+      <style jsx>
+        {`
+          button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+          button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+          }
+        `}
+      </style>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import Modal from "@/app/components/CustomModal";
-import TeachersLayout from "../../layouts/teachersLayout";
+import ParentsLayout from "../../layouts/parentsLayout";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -37,21 +37,8 @@ function TeacherNotesAndAbsences() {
       setIsLoaded(true);
     };
     fetchRelations();
-    /* setTimeout(() => {
-      console.log(relationsOfTeacherRef.current);
-    }, 1000); */
   }, []);
 
-  /*   function pushToCatalog(catalogInfo: Relation) {
-    const { subject, subject_id, class:className, class_id } = catalogInfo;
-    //const stringClassId = catalogInfo.class_id.toString();
-    const stringSubjectDatas = JSON.stringify{ name: subject, id: subject_id }
-        const stringSubjectDatas = JSON.stringify{name: class, id: class_id}
-    localStorage.setItem("subject_data", stringSubjectDatas);
-    localStorage.setItem("class_data", stringClassDatas);
-
-    router.push("/teachers/catalog");
-  } */
   function pushToCatalog(catalogInfo: Relation) {
     const { subject, subject_id, class: className, class_id } = catalogInfo;
     const subjectData = JSON.stringify({ name: subject, id: subject_id });
@@ -64,7 +51,7 @@ function TeacherNotesAndAbsences() {
   }
 
   return (
-    <TeachersLayout>
+    <ParentsLayout>
       <p>Choose the class and subject:</p>
       <div className="classContainer">
         {relationsOfTeacherRef.current.map((item, index) => (
@@ -133,7 +120,7 @@ function TeacherNotesAndAbsences() {
           border: 4px solid darkslategray;
         }
       `}</style>
-    </TeachersLayout>
+    </ParentsLayout>
   );
 }
 

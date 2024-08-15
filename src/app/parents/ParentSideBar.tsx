@@ -3,39 +3,23 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { usePathname } from "next/navigation";
 
-function TeacherSidebar() {
+function ParentSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   return (
     <div className="sidebar-elements">
       <div
-        id={pathname === "/teachers/notes&absences" ? "active-path" : ""}
+        id={pathname === "/parents/children" ? "active-path" : ""}
         onClick={() => {
-          router.push("/teachers/notes&absences");
+          router.push("/parents/children");
         }}
       >
-        Notes and absences
+        My children
       </div>
       <div
-        id={pathname === "/teachers/classes" ? "active-path" : ""}
+        id={pathname === "/parents" ? "active-path" : ""}
         onClick={() => {
-          router.push("/teachers/classes");
-        }}
-      >
-        My classes
-      </div>
-      <div
-        id={pathname === "/teachers/subjects" ? "active-path" : ""}
-        onClick={() => {
-          router.push("/teachers/subjects");
-        }}
-      >
-        Subjects of school
-      </div>
-      <div
-        id={pathname === "/teachers" ? "active-path" : ""}
-        onClick={() => {
-          router.push("/teachers");
+          router.push("/parents");
         }}
       >
         About me
@@ -69,4 +53,4 @@ function TeacherSidebar() {
   );
 }
 
-export default TeacherSidebar;
+export default ParentSidebar;

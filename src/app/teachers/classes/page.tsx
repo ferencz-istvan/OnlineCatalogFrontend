@@ -86,51 +86,29 @@ function TeacherAbsences() {
   return (
     <TeachersLayout>
       {isLoaded ? (
-        <div>
-          <TableComponent
-            data={relationsOfTeacherRef.current}
-            tableName="The subjects that I teach:"
-            AddItemModal={AddClassRelation}
-            DeleteItemModal={DeleteSubject}
-            headerList={["class", "subject"]}
-          ></TableComponent>
-          <br />
+        <div className="container">
+          <div className="table-container">
+            <TableComponent
+              data={relationsOfTeacherRef.current}
+              tableName="The subjects that I teach:"
+              AddItemModal={AddClassRelation}
+              DeleteItemModal={DeleteSubject}
+              headerList={["class", "subject"]}
+            ></TableComponent>
+          </div>
+
           <div className="image-block">
             <div className="image-container">
-              <img
-                src="/icons/phisicSubject.svg"
-                alt="image 0"
-                height="300px"
-              />
-              <img src="/icons/mathSubject.svg" alt="image 1" height="300px" />
-              <img
-                src="/icons/gymnasticSubject.svg"
-                alt="image 2"
-                height="300px"
-              />
-              <img
-                src="/icons/geographySubject.svg"
-                alt="image 3"
-                height="300px"
-              />
-              <img src="/icons/drawningSubject.svg" alt="4" height="300px" />
-              <img
-                src="/icons/phisicSubject.svg"
-                alt="image 0"
-                height="300px"
-              />
-              <img src="/icons/mathSubject.svg" alt="image 1" height="300px" />
-              <img
-                src="/icons/gymnasticSubject.svg"
-                alt="image 2"
-                height="300px"
-              />
-              <img
-                src="/icons/geographySubject.svg"
-                alt="image 3"
-                height="300px"
-              />
-              <img src="/icons/drawningSubject.svg" alt="4" height="300px" />
+              <img src="/icons/phisicSubject.svg" alt="image 0" />
+              <img src="/icons/mathSubject.svg" alt="image 1" />
+              <img src="/icons/gymnasticSubject.svg" alt="image 2" />
+              <img src="/icons/geographySubject.svg" alt="image 3" />
+              <img src="/icons/drawningSubject.svg" alt="4" />
+              <img src="/icons/phisicSubject.svg" alt="image 0" />
+              <img src="/icons/mathSubject.svg" alt="image 1" />
+              <img src="/icons/gymnasticSubject.svg" alt="image 2" />
+              <img src="/icons/geographySubject.svg" alt="image 3" />
+              <img src="/icons/drawningSubject.svg" alt="4" />
             </div>
           </div>
         </div>
@@ -142,11 +120,29 @@ function TeacherAbsences() {
       </div>
       <style jsx>
         {`
+          .container {
+            display: flex;
+          }
+          .table-container {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
           .image-block {
             position: relative;
-            width: 100%;
-            height: 300px; /* adjust the height to fit your images */
+            width: 60%;
+            height: 250px;
             overflow: hidden;
+            border: 3px solid darkslategray;
+            border-radius: 30px;
+            margin: auto 5%;
+            background-image: linear-gradient(
+              -70deg,
+              darkseagreen,
+              slategray,
+              cadetblue
+            );
           }
 
           .image-container {
@@ -162,8 +158,6 @@ function TeacherAbsences() {
 
           .image-container img {
             width: 10%; /* adjust the width to fit your images */
-            height: 100%;
-            object-fit: cover;
           }
 
           @keyframes scroll {
@@ -174,6 +168,20 @@ function TeacherAbsences() {
               transform: translateX(
                 -50%
               ); /* move the container by half of its width */
+            }
+          }
+          @media only screen and (max-width: 800px) {
+            .container {
+              flex-direction: column;
+            }
+            .image-block {
+              width: 100vw;
+              border: none;
+              margin: -40px;
+              background-image: none;
+            }
+            .table-container {
+              width: 100%;
             }
           }
         `}

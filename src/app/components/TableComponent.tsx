@@ -35,7 +35,10 @@ const DataTable: React.FC<DataTableProps> = ({
       <h1>{tableName}</h1>
       {AddItemModal && (
         <div>
-          <button onClick={() => setIsOpenAddModal(true)}>
+          <button
+            className="add-button"
+            onClick={() => setIsOpenAddModal(true)}
+          >
             ✙ Add new item
           </button>
           <br />
@@ -187,6 +190,16 @@ const DataTable: React.FC<DataTableProps> = ({
         )}
       </DefaultModal>
       <style jsx>{`
+        .add-button {
+          padding: 5px;
+          margin: 10px;
+          border-radius: 6px;
+        }
+        .add-button:hover {
+          background-image: linear-gradient(60deg, darkslategray, black);
+          color: white;
+          cursor: pointer;
+        }
         table {
           border: 2px solid darkslategrey;
           padding: 15px;

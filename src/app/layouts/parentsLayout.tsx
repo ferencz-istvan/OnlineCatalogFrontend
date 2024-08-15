@@ -3,13 +3,13 @@
 import HeaderComponent from "../components/HeaderComponent";
 import SideBarComponent from "../components/SideBarComponent";
 import { useState, useEffect } from "react";
-import TeacherSidebar from "../teachers/TeacherSideBar";
+import ParentSidebar from "../parents/ParentSideBar";
 
 interface ParentsLayoutProps {
   children: React.ReactNode;
 }
 
-const CustomLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
+const ParentsLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
   const [isNavbar, setIsNavbar] = useState(false);
   useEffect(() => {
     const mainMargins = isNavbar
@@ -33,7 +33,7 @@ const CustomLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
         role="parent"
       ></HeaderComponent>
       <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar}>
-        <TeacherSidebar />
+        <ParentSidebar />
       </SideBarComponent>
       <div className="main">{children}</div>
       <style jsx>{`
@@ -45,4 +45,4 @@ const CustomLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
   );
 };
 
-export default CustomLayout;
+export default ParentsLayout;

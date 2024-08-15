@@ -2,71 +2,68 @@
 
 import { useState, useEffect, useRef } from "react";
 import TeachersLayout from "../layouts/teachersLayout";
-import { User } from "../../lib/loginData";
 import { Student } from "../../lib/loginData";
-import Modal from "@/app/components/CustomModal";
-import TestModal from "@/app/components/JustTestComponent";
 import UserCard from "../components/UserDataCard";
+import { RelationsOfTeacher } from "../interfaces/complexInterfaces";
+import Link from "next/link";
 
 function TeacherView() {
-  const [actualUser, setActualUser] = useState<Partial<User> | null>(null);
   const [actualRole, setActualRole] = useState<Partial<Student> | null>(null);
-  //const relationsOfTeacherRef = useRef([]);
-  const relationsOfTeacherRef = useRef<{ subject: string }[]>([]);
+  const [relationsOfTeacher, setRelationsOfTeacher] = useState<
+    RelationsOfTeacher[]
+  >([]);
   const [isActualRoleLoaded, setIsActualRoleLoaded] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("actual_user");
     const storedRole = localStorage.getItem("actual_role");
-
-    if (storedUser) {
-      setActualUser(JSON.parse(storedUser) as Partial<User> | null);
-    }
-
     if (storedRole) {
       setActualRole(JSON.parse(storedRole) as Partial<Student> | null);
       setIsActualRoleLoaded(true);
     }
   }, []);
   useEffect(() => {
+    //console.log("use effect", actualRole);
     if (isActualRoleLoaded && actualRole) {
       const teacher_id = actualRole.id;
       const accessToken = localStorage.getItem("accessToken");
       const fetchRelations = async () => {
-        const response = await fetch(
-          `http://localhost:3000/relations/withTeacher/${teacher_id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = await response.json();
-        relationsOfTeacherRef.current = data;
-        //setIsLoaded(true);
+        if (teacher_id) {
+          const response = await fetch(
+            `http://localhost:3000/relations/withTeacher/${teacher_id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setRelationsOfTeacher(data);
+          //relationsOfTeacherRef.current = data;
+        }
       };
       fetchRelations();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActualRoleLoaded, actualRole]);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("actual_user");
-    const storedRole = localStorage.getItem("actual_role");
-
-    if (storedUser) {
-      setActualUser(JSON.parse(storedUser) as Partial<User> | null);
-    }
-
-    if (storedRole) {
-      setActualRole(JSON.parse(storedRole) as Partial<Student> | null);
-    }
-  }, []);
 
   return (
     <TeachersLayout>
       <div className="container">
-        <div>
+        <div className="moving-link-container">
+          <Link href="/teachers/notes&absences">
+            <button className="link-button">
+              <span className="arrow-symbol">➠</span> Go to notes!
+              <img
+                src="/icons/catalogColumn.svg"
+                alt="image about a column is the catalog"
+                height="80px"
+              />
+            </button>
+          </Link>
+        </div>
+        {/* <span>{relationsOfTeacher.toString()}.......</span> */}
+        {/*       <div>
           <Modal buttonName="Testmodal button">
             <TestModal
               setIsOpen={function (isOpen: boolean): void {
@@ -74,7 +71,7 @@ function TeacherView() {
               }}
             />
           </Modal>
-        </div>
+        </div> */}
         <UserCard />
         <div className="image-container">
           <img
@@ -90,19 +87,66 @@ function TeacherView() {
             <h3>Full name: {actualRole?.name}</h3>
             <h3>
               Subjects (s)he teaches:{" "}
-              {relationsOfTeacherRef.current.map((relation, index) => (
-                <span key={index}>{relation.subject} </span>
-              ))}
+              {Array.from(
+                new Set(relationsOfTeacher.map((relation) => relation.subject))
+              )
+                .sort((a, b) => a.localeCompare(b)) // sort alphabetically
+                .map((subject, index) => (
+                  <span key={index}>
+                    {subject}
+                    {", "}
+                  </span>
+                ))}
             </h3>
-            <h3>Classes: {actualRole?.class_name}</h3>
+            <h3>
+              Classes:{" "}
+              {relationsOfTeacher
+                .slice() // create a copy of the array to avoid mutating the original
+                .sort((a, b) => a.class.localeCompare(b.class)) // sort by class name
+                .map((relation, index) => (
+                  <span key={index}>
+                    {relation.class}
+                    {", "}
+                  </span>
+                ))}
+            </h3>
           </div>
           <div className="card-right-side"></div>
         </div>
       </div>
       <style jsx>
         {`
+          .link-button {
+          display:flex;
+          align-items: center;
+          font-size: 18px;    
+          padding-left: 30px;
+          margin: 10px;
+          border-radius: 30% 100% 30% 100%;
+          cursor: pointer;
+          animation: move-horizontal 3s linear infinite;
+       
+          }
+          .link-button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+            animation-play-state: paused;
+          }
+                @keyframes move-horizontal {
+          0% {
+            margin-left: 0px;
+          }
+          50% {
+            margin-left: 10px;
+          }
+          100% {
+            margin-left: 0px; 
+          }
           .container {
             padding: 70px;
+          }}
+          .arrow-symbol {
+              -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
           }
           .image-container {
             display: flex;
@@ -118,7 +162,7 @@ function TeacherView() {
             margin-right: 20px;
           }
           .role-card {
-            background-color: DarkSeaGreen;
+            background-image: linear-gradient(-70deg, slategray, cadetblue, darkseagreen);
             margin: 20px;
             padding: 30px;
             border: 4px solid darkslategray;

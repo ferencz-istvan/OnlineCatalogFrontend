@@ -29,18 +29,27 @@ function TeacherSubjects() {
     <TeachersLayout>
       <h3>Adding and removing subjects for whole school:</h3>
       <br />
-      <div>Teachers classes</div>
-      <TableComponent
-        data={allSubject}
-        tableName="Subjects of school"
-        AddItemModal={AddSubject}
-        EditItemModal={EditSubject}
-        DeleteItemModal={DeleteSubject}
-        headerList={["name", "description"]}
-      ></TableComponent>
+      <div className="table-container">
+        <TableComponent
+          data={allSubject}
+          tableName="Subjects of school"
+          AddItemModal={AddSubject}
+          EditItemModal={EditSubject}
+          DeleteItemModal={DeleteSubject}
+          headerList={["name", "description"]}
+        ></TableComponent>
+      </div>
       <div>
         <Modal buttonName="Modal test" />
       </div>
+      <style jsx>
+        {`
+          .table-container {
+            display: flex;
+            justify-content: center;
+          }
+        `}
+      </style>
     </TeachersLayout>
   );
 }

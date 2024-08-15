@@ -3,6 +3,7 @@
 import HeaderComponent from "../components/HeaderComponent";
 import SideBarComponent from "../components/SideBarComponent";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import StudentSidebar from "../students/StudentSideBar";
 
 interface StudentsLayoutProps {
@@ -11,6 +12,9 @@ interface StudentsLayoutProps {
 
 const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
   const [isNavbar, setIsNavbar] = useState(false);
+  const router = useRouter();
+  const actualUser = localStorage.getItem("actual_user");
+
   useEffect(() => {
     const mainMargins = isNavbar
       ? { marginLeft: "300px" }
@@ -26,23 +30,28 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
   function handleNavbar() {
     setIsNavbar((prev) => !prev);
   }
-  return (
-    <div>
-      <HeaderComponent
-        handleNavbar={handleNavbar}
-        role="student"
-      ></HeaderComponent>
-      <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar}>
-        <StudentSidebar />
-      </SideBarComponent>
-      <div className="main">{children}</div>
-      <style jsx>{`
-        .main {
-          padding: 10px 40px;
-        }
-      `}</style>
-    </div>
-  );
+  if (actualUser && JSON.parse(actualUser).role === "Student") {
+    return (
+      <div>
+        <HeaderComponent
+          handleNavbar={handleNavbar}
+          role="student"
+        ></HeaderComponent>
+        <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar}>
+          <StudentSidebar />
+        </SideBarComponent>
+        <div className="main">{children}</div>
+        <style jsx>{`
+          .main {
+            padding: 10px 40px;
+          }
+        `}</style>
+      </div>
+    );
+  } else {
+    router.push("/login");
+    return null;
+  }
 };
 
 export default CustomLayout;

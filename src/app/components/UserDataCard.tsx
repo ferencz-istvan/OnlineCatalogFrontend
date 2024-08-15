@@ -51,7 +51,7 @@ export default function UserCard() {
           max-height: 60%;
         }
         .user-card {
-          background-color: DarkSeaGreen;
+          background-image: linear-gradient(-70deg, darkseagreen, slategray, cadetblue);
           margin: 20px;
           padding: 30px;
           border: 4px solid darkslategray;

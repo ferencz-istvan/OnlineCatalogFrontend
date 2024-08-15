@@ -43,7 +43,7 @@ export default function LoginForm(props: LoginProps) {
 
   const logActualUser = () => {
     const user = useUserPublicData.getState().actual_user;
-    console.log("Actual user:");
+    //console.log("Actual user:");
     console.log(user);
   };
 
@@ -115,10 +115,9 @@ export default function LoginForm(props: LoginProps) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log(`Email: ${loginEmail}\nPassword: ${loginPassword}`);
+            //console.log(`Email: ${loginEmail}\nPassword: ${loginPassword}`);
             sendLoginRequest();
             setActualRole();
-            //routeToRole();
           }}
         >
           Login

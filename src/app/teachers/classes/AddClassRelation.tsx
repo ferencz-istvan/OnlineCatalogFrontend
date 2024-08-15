@@ -10,7 +10,7 @@ interface Classes {
   id: number;
   name: string;
   grade: number;
-  speciality: string;
+  specialty: string;
   conductor_id: number;
 }
 
@@ -99,7 +99,7 @@ const AddClassRelation: React.FC<AddProps> = ({
   }
 
   return (
-    <div>
+    <div className="modal-container">
       <form>
         <label htmlFor="class">Class: </label>
         <select
@@ -113,7 +113,7 @@ const AddClassRelation: React.FC<AddProps> = ({
               {cls.grade} {cls.name}
             </option>
           ))}
-        </select>
+        </select>{" "}
         <label htmlFor="subject">Subject: </label>
         <select
           id="subject"
@@ -165,6 +165,28 @@ const AddClassRelation: React.FC<AddProps> = ({
           Add a new subject
         </button>
       </form>
+      <style jsx>{`
+        button {
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        button:hover {
+          box-shadow: 3px 3px 8px darkslategray;
+        }
+        @media only screen and (max-width: 800px) {
+          .modal-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+          }
+          button {
+            margin: 20px;
+          }
+        }
+      `}</style>
     </div>
   );
 };

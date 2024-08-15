@@ -131,6 +131,7 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
               value={emailValue}
               onChange={(e) => setEmailValue(e.target.value)}
             />
+            <br />
             <button
               onClick={async (e) => {
                 e.preventDefault();
@@ -143,6 +144,17 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
           </form>
         </div>
       )}
+      <style jsx>{`
+        button {
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        button:hover {
+          box-shadow: 3px 3px 8px darkslategray;
+        }
+      `}</style>
     </div>
   );
 };
