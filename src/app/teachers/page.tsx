@@ -116,6 +116,9 @@ function TeacherView() {
       </div>
       <style jsx>
         {`
+          .container {
+            padding: 10px;
+          }
           .link-button {
           display:flex;
           align-items: center;

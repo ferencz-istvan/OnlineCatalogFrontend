@@ -46,7 +46,7 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             height={50}
           />
         </div>
-        <div className="grid-item">
+        <div className="grid-title">
           Online Catalog{forTextFunction(props.role)}
         </div>
         <div className="grid-item">
@@ -65,7 +65,7 @@ export default function HeaderComponent(props: HeaderComponentProps) {
       {
         <div className={isTricky ? "tricky-header" : "hidden-header"}>
           <div
-            className={isTricky ? "tricky-item pointer" : "hidden-item"}
+            className={isTricky ? "tricky-item-navbar pointer" : "hidden-item"}
             onClick={props.handleNavbar}
           >
             <img
@@ -74,10 +74,10 @@ export default function HeaderComponent(props: HeaderComponentProps) {
               height={50}
             />
           </div>
-          <div className={isTricky ? "tricky-item" : "hidden-item"}>
+          <div className={isTricky ? "tricky-item-title" : "hidden-item"}>
             Online Catalog
           </div>
-          <div className={isTricky ? "tricky-item" : "hidden-item"}>
+          <div className={isTricky ? "tricky-item-logout" : "hidden-item"}>
             <Link onClick={clearLocalStorage} href="/login">
               <div className="log-out">
                 <span className="link-text">Log Out </span>{" "}
@@ -101,7 +101,8 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             background-color: darkslategrey;
             place-items: center;
           }
-          .grid-item {
+          .grid-item,
+          .grid-title {
             padding: 12px;
             font-size: 1.6em;
             color: white;
@@ -129,7 +130,9 @@ export default function HeaderComponent(props: HeaderComponentProps) {
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
             transition: all 1000ms linear;
           }
-          .tricky-item {
+          .tricky-item-navbar,
+          .tricky-item-title,
+          .tricky-item-logout {
             padding: 12px;
             font-size: 1.6em;
             color: black;
@@ -165,6 +168,40 @@ export default function HeaderComponent(props: HeaderComponentProps) {
           @media only screen and (max-width: 800px) {
             .link-text {
               display: none;
+            }
+            .normal-header {
+              grid-template-areas:
+                "title title"
+                "navbar logout";
+              grid-template-rows: 1fr 1fr;
+              grid-template-columns: 1fr 1fr;
+            }
+            .grid-title {
+              grid-area: title;
+              font-size: calc(3vw + 10px);
+            }
+            .grid-item-menu {
+              grid-area: navbar;
+            }
+            .grid-item {
+              grid-area: logout;
+            }
+            .tricky-header {
+              grid-template-areas:
+                "title title"
+                "navbar logout";
+              grid-template-rows: 1fr 1fr;
+              grid-template-columns: 1fr 1fr;
+            }
+            .tricky-item-navbar {
+              grid-area: navbar;
+            }
+            .tricky-item-title {
+              grid-area: title;
+              font-size: calc(3vw + 10px);
+            }
+            .tricky-item-logout {
+              grid-area: logout;
             }
           }
         `}

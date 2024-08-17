@@ -21,6 +21,7 @@ interface Student {
   class_id: number;
   parent_id: number;
   address: string;
+  user_id: number;
 }
 
 interface Subject {

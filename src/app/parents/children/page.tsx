@@ -4,6 +4,7 @@ import Modal from "@/app/components/CustomModal";
 import ParentsLayout from "../../layouts/parentsLayout";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import type { Student } from "@/app/interfaces/baseInterfaces";
 
 interface Relation {
   subject: string;
@@ -14,17 +15,17 @@ interface Relation {
 
 function TeacherNotesAndAbsences() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const relationsOfTeacherRef = useRef<Relation[]>([]);
+  const [studentsOfParent, setStudentOfParent] = useState<Student[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const teacher_id = JSON.parse(
+    const parent_id = JSON.parse(
       localStorage.getItem("actual_role") as string
     ).id;
     const accessToken = localStorage.getItem("accessToken");
     const fetchRelations = async () => {
       const response = await fetch(
-        `http://localhost:3000/relations/withTeacher/${teacher_id}`,
+        `http://localhost:3000/students/ofParent/${parent_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,43 +33,53 @@ function TeacherNotesAndAbsences() {
           },
         }
       );
-      const data: Relation[] = await response.json();
-      relationsOfTeacherRef.current = data;
-      setIsLoaded(true);
+      const data: Student[] = await response.json();
+      setStudentOfParent(data);
     };
     fetchRelations();
   }, []);
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [studentsOfParent]);
 
-  function pushToCatalog(catalogInfo: Relation) {
-    const { subject, subject_id, class: className, class_id } = catalogInfo;
-    const subjectData = JSON.stringify({ name: subject, id: subject_id });
-    const classData = JSON.stringify({ name: className, id: class_id });
+  function pushToCatalog(child: Student) {
+    /* const {
+      id: childId,
+      name: childName,
+      class_id: classId,
+      address,
+      user_id: userIdOfChild,
+    } = child; */
+    //const subjectData = JSON.stringify({ name: subject, id: subject_id });
+    const childOfParent = JSON.stringify(child);
 
-    localStorage.setItem("subject_data", subjectData);
-    localStorage.setItem("class_data", classData);
+    localStorage.setItem("child_data", childOfParent);
 
-    router.push("/teachers/catalog");
+    router.push("/parents/catalog");
   }
 
   return (
     <ParentsLayout>
-      <p>Choose the class and subject:</p>
+      <p>Select the child whose grades you are interested in:</p>
       <div className="classContainer">
-        {relationsOfTeacherRef.current.map((item, index) => (
+        {studentsOfParent.map((student, index) => (
           <div
-            onClick={() =>
+            onClick={() => {
+              pushToCatalog(student);
+            }}
+            /*  onClick={() =>
               pushToCatalog({
                 subject: item?.subject,
                 subject_id: item?.subject_id,
                 class: item?.class,
                 class_id: item?.class_id,
               })
-            }
+            } */
             key={index}
             className="containerElement"
           >
-            <span>{item?.subject.toUpperCase()}</span>
-            <span>in {item.class}</span>
+            <span>{student?.name.toUpperCase()}</span>
+            <span>in {student.address}</span>
           </div>
         ))}
       </div>
@@ -91,13 +102,13 @@ function TeacherNotesAndAbsences() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 300px;
+          padding: 20px;
           height: 180px;
           background-image: linear-gradient(
             60deg,
             darkseagreen,
             lightgray,
-            slategray,
+            lightgray,
             cadetblue
           );
           border-radius: 40px;

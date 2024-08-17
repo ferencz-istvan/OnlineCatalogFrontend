@@ -82,8 +82,21 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
         password: passwordValue,
       }),
     });
-    const data = await response.json();
-    //console.log(data);
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      localStorage.setItem(
+        "actual_user",
+        JSON.stringify({
+          user_id: userId,
+          role: roleValue,
+          email: emailValue,
+          username: usernameValue,
+        })
+      );
+    } else {
+      console.log("Something went wrong");
+    }
+    //const data = await response.json();
   }
 
   return (
@@ -137,6 +150,7 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
                 e.preventDefault();
                 await putNewDatas();
                 handleClose();
+                location.reload();
               }}
             >
               Change values

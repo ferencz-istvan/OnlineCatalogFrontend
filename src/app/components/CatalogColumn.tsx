@@ -166,13 +166,13 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
             "header header"
             "notes absences"
             "mean absences";
-          grid-template-rows: 50px 1fr 45px;
+          grid-template-rows: 75px 1fr 45px;
           grid-template-columns: 1fr 1fr;
           gap: 5px;
           background-color: darkslategray;
           padding: 10px 5px;
           min-width: 200px;
-          min-height: 500px;
+          min-height: 550px;
         }
         .subject-column > div {
           text-align: center;
@@ -183,6 +183,10 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
         .header {
           grid-area: header;
           border-radius: 10px;
+          overflow: auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .addAbs {
           color: white;

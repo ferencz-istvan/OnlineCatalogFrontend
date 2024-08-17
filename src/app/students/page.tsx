@@ -5,10 +5,10 @@ import StudentsLayout from "../layouts/studentsLayout";
 import { User } from "../../lib/loginData";
 import { Student } from "../../lib/loginData";
 import Modal from "@/app/components/CustomModal";
-import TestModal from "@/app/components/JustTestComponent";
 import UserCard from "../components/UserDataCard";
 import SetStudentDatasForm from "./SetStudentDatas";
 import Link from "next/link";
+import ParentRelation from "../components/ParentRelation";
 
 function StudentView() {
   const [actualUser, setActualUser] = useState<Partial<User> | null>(null);
@@ -65,35 +65,35 @@ function StudentView() {
             </Modal>
           </div>
         </div>
+        <br />
+        <ParentRelation />
       </div>
       <style jsx>
         {`
           button {
-           
-          padding: 10px;
-          margin: 10px;
-          border-radius: 15px;
-          cursor: pointer;
-          animation: move-horizontal 3s linear infinite;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            animation: move-horizontal 3s linear infinite;
           }
           button:hover {
             box-shadow: 3px 3px 8px darkslategray;
             animation-play-state: paused;
           }
           @keyframes move-horizontal {
-          0% {
-            margin-left: 10px;
-          }
-          40% {
-            margin-left: 20px;
-          }
-          100% {
-            margin-left: 10px; 
-          }
+            0% {
+              margin-left: 10px;
+            }
+            40% {
+              margin-left: 20px;
+            }
+            100% {
+              margin-left: 10px;
+            }
           }
           .container {
             padding: 0px 70px;
-            {/* background-color: pink; */}
           }
           .image-container {
             display: flex;
@@ -103,13 +103,18 @@ function StudentView() {
             max-height: 300px;
           }
           #center-img {
-            animation: pulse 6s infinite;          
+            animation: pulse 6s infinite;
           }
           button {
             margin-right: 20px;
           }
           .student-card {
-            background-image: linear-gradient(-70deg,  cadetblue, darkseagreen, slategray);
+            background-image: linear-gradient(
+              -70deg,
+              cadetblue,
+              darkseagreen,
+              slategray
+            );
             margin: 20px;
             padding: 30px;
             border: 4px solid darkslategray;
@@ -126,35 +131,38 @@ function StudentView() {
             justify-content: flex-end;
             width: 40%;
           }
-           @keyframes pulse {
-          0% {
-            max-height: 80%;
-            max-width: 80%;
-          }
-          50% {
-            max-height: 100%;
-            max-width: 100%;
-          }
-          100% {
-            max-height: 80%;
-            max-width: 80%;
-          }
+          @keyframes pulse {
+            0% {
+              max-height: 80%;
+              max-width: 80%;
+            }
+            50% {
+              max-height: 100%;
+              max-width: 100%;
+            }
+            100% {
+              max-height: 80%;
+              max-width: 80%;
+            }
           }
           @media only screen and (max-width: 700px) {
-          .student-card {
-            flex-direction: column;
-            align-items: center;
-            margin: 5px;
+            .container {
+              padding: 0 10px;
+            }
+            .student-card {
+              flex-direction: column;
+              align-items: center;
+              margin: 5px;
+            }
+            .card-right-side {
+              width: 100%;
+              justify-content: center;
+            }
+            .card-left-side {
+              width: 100%;
+              align-items: center;
+            }
           }
-          .card-right-side {
-            width: 100%;
-            justify-content: center;
-          }
-          .card-left-side {
-            width: 100%;
-           align-items: center;
-        }
-        
         `}
       </style>
     </StudentsLayout>

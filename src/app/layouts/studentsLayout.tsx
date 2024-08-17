@@ -45,6 +45,11 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
           .main {
             padding: 10px 40px;
           }
+          @media only screen and (max-width: 700px) {
+            .main {
+              padding: 0;
+            }
+          }
         `}</style>
       </div>
     );
