@@ -1,16 +1,28 @@
 import Modal from "./CustomModal";
+import DefaultModal from "./DefaultModal";
 import SetParentRelation from "@/app/students/SetParentRelation";
 import { useState, useEffect } from "react";
 import type { Parent } from "../interfaces/baseInterfaces";
 
-function ParentRelation() {
+const ParentRelation = () => {
+  const [parentId, setParentId] = useState(0);
   const [parentOfStudent, setParentOfStudent] = useState<Parent>();
+
+  useEffect(() => {
+    const studentOfParent = JSON.parse(
+      localStorage.getItem("actual_role") as string
+    );
+    if (studentOfParent) {
+      const parentId = studentOfParent.parent_id;
+      setParentId(parentId);
+    }
+  }, []);
 
   async function getParent() {
     const token = localStorage.getItem("accessToken");
-    const parentId = JSON.parse(
+    /* const parentId = JSON.parse(
       localStorage.getItem("actual_role") as string
-    ).parent_id;
+    ).parent_id; */
     try {
       const response = await fetch(
         `http://localhost:3000/parents/${parentId}`,
@@ -30,7 +42,8 @@ function ParentRelation() {
 
   useEffect(() => {
     getParent();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parentId]);
   return (
     <>
       <div className="parent-relation-card">
@@ -38,22 +51,41 @@ function ParentRelation() {
           <h2>Parent relation:</h2>
           <h3>Parent name: {parentOfStudent?.name}</h3>
           <h3>Phone number of parent: {parentOfStudent?.phone_number}</h3>
-          <button
-            onClick={(e) => {
-              e.preventDefault;
-              console.log(parentOfStudent);
-            }}
-          >
-            Console.log parent data
-          </button>
         </div>
         <div className="card-right-side">
-          <Modal buttonName="Edit">
-            <SetParentRelation />
+          <Modal buttonName="Edit parent relation">
+            <SetParentRelation
+              setIsOpen={function (isOpen: boolean): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           </Modal>
         </div>
       </div>
+      {/*  <DefaultModal
+        isOpen={isOpenRelationModal}
+        setIsOpen={setIsOpenRelationModal}
+        buttonName="Parent relation:"
+      >
+        {SetParentRelation && (
+          <SetParentRelation
+            setIsOpen={setIsOpenRelationModal}
+            dataForFetch={}
+          />
+        )}
+      </DefaultModal> */}
       <style jsx>{`
+        button {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          margin: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        button:hover {
+          box-shadow: 3px 3px 8px darkslategray;
+        }
         .parent-relation-card {
           background-image: linear-gradient(
             -70deg,
@@ -95,6 +127,6 @@ function ParentRelation() {
       `}</style>
     </>
   );
-}
+};
 
 export default ParentRelation;

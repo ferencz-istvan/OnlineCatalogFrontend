@@ -17,7 +17,7 @@ export default function Home() {
         <div className={styles.title}>
           <Link href="/login">Online catalog</Link>
         </div>
-        <div className={styles.messageContainer}>
+        <div className={styles["message-container"]}>
           <span className={styles.messageText}>
             To use catalog, you have to{" "}
           </span>
@@ -27,10 +27,10 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.secondPage}>
-        <div className={styles.forImage}>
+        <div className={styles["for-image"]}>
           <img src="/icons/table.svg" alt="schoolboard image" />
         </div>
-        <div className={styles.forText}>
+        <div className={styles["for-text"]}>
           <p>
             This website was created to simplify school bureaucracy. Grades,
             absences, and various class data are stored in a database and can be

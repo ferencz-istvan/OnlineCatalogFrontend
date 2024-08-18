@@ -67,19 +67,11 @@ function TeacherNotesAndAbsences() {
             onClick={() => {
               pushToCatalog(student);
             }}
-            /*  onClick={() =>
-              pushToCatalog({
-                subject: item?.subject,
-                subject_id: item?.subject_id,
-                class: item?.class,
-                class_id: item?.class_id,
-              })
-            } */
             key={index}
             className="containerElement"
           >
             <span>{student?.name.toUpperCase()}</span>
-            <span>in {student.address}</span>
+            {/* <span>in {student.address}</span> */}
           </div>
         ))}
       </div>
@@ -103,13 +95,13 @@ function TeacherNotesAndAbsences() {
           justify-content: center;
           align-items: center;
           padding: 20px;
-          height: 180px;
+          height: 120px;
           background-image: linear-gradient(
             60deg,
             darkseagreen,
             lightgray,
             lightgray,
-            cadetblue
+            azure
           );
           border-radius: 40px;
           cursor: pointer;
@@ -126,7 +118,7 @@ function TeacherNotesAndAbsences() {
             darkseagreen,
             lightgray,
             lightgray,
-            azure
+            cadetblue
           );
           border: 4px solid darkslategray;
         }

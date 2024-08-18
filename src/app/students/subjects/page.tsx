@@ -68,14 +68,7 @@ function StudentSubjects() {
 
   return (
     <StudentsLayout>
-      <div>Hello</div>
-      <div>Student Subjects</div>
-      <div>Hello</div>
-      <div>
-        <TableComponent
-          data={fetchedClass}
-          tableName="Classes table"
-        ></TableComponent>{" "}
+      <div className="container">
         <br />
         <TableComponent
           data={fetchedClassMates}
@@ -85,7 +78,21 @@ function StudentSubjects() {
           data={fetchedTeachersOfClass}
           tableName="Subjects and teachers:"
         ></TableComponent>
+        <br />
+        <TableComponent
+          data={fetchedClass}
+          tableName="Classes table"
+        ></TableComponent>{" "}
       </div>
+      <style jsx>
+        {`
+          .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        `}
+      </style>
     </StudentsLayout>
   );
 }

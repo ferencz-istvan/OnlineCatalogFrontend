@@ -41,6 +41,7 @@ export default function HeaderComponent(props: HeaderComponentProps) {
       <div className="normal-header">
         <div className="grid-item-menu pointer" onClick={props.handleNavbar}>
           <img
+            id="menu-img"
             src="/icons/hamburgerMenuWhite.svg"
             alt="white hamburger menu"
             height={50}
@@ -81,7 +82,12 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             <Link onClick={clearLocalStorage} href="/login">
               <div className="log-out">
                 <span className="link-text">Log Out </span>{" "}
-                <img src="/icons/logOut.svg" alt="logout image" height={45} />
+                <img
+                  id="logout-img"
+                  src="/icons/logOut.svg"
+                  alt="logout image"
+                  height={45}
+                />
               </div>
             </Link>
           </div>
@@ -128,7 +134,10 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             backdrop-filter: blur(15px);
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            transition: all 1000ms linear;
+            transition: all 300ms linear;
+          }
+          .tricky-header > #logout-img {
+            height: 45px;
           }
           .tricky-item-navbar,
           .tricky-item-title,
@@ -137,12 +146,12 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             font-size: 1.6em;
             color: black;
             font-weight: 500;
-            transition: all 700ms linear 300ms;
+            transition: all 300ms linear 200ms;
           }
           .hidden-header {
             position: fixed;
             top: 0;
-            margin: 0;
+            margin: -40px 0 0 0;
             padding: 0;
             display: grid;
             width: 100%;
@@ -152,6 +161,9 @@ export default function HeaderComponent(props: HeaderComponentProps) {
             place-items: center;
             backdrop-filter: blur(15px);
             transition: all 500ms linear;
+          }
+          .hidden-header > #logout-img {
+            display: none;
           }
           .hidden-item {
             padding: 0px;

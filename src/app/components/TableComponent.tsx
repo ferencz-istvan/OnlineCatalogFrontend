@@ -31,7 +31,7 @@ const DataTable: React.FC<DataTableProps> = ({
   const [dataForFetch, setDataForFetch] = useState([]);
 
   return (
-    <div>
+    <div className="table-component">
       <h1>{tableName}</h1>
       {AddItemModal && (
         <div>
@@ -190,6 +190,9 @@ const DataTable: React.FC<DataTableProps> = ({
         )}
       </DefaultModal>
       <style jsx>{`
+        .table-component {
+          overflow: auto;
+        }
         .add-button {
           padding: 5px;
           margin: 10px;

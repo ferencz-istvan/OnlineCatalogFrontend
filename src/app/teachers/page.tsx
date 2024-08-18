@@ -120,35 +120,35 @@ function TeacherView() {
             padding: 10px;
           }
           .link-button {
-          display:flex;
-          align-items: center;
-          font-size: 18px;    
-          padding-left: 30px;
-          margin: 10px;
-          border-radius: 30% 100% 30% 100%;
-          cursor: pointer;
-          animation: move-horizontal 3s linear infinite;
-       
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            padding-left: 30px;
+            margin: 10px;
+            border-radius: 30% 100% 30% 100%;
+            cursor: pointer;
+            animation: move-horizontal 3s linear infinite;
           }
           .link-button:hover {
             box-shadow: 3px 3px 8px darkslategray;
             animation-play-state: paused;
           }
-                @keyframes move-horizontal {
-          0% {
-            margin-left: 0px;
+          @keyframes move-horizontal {
+            0% {
+              margin-left: 0px;
+            }
+            50% {
+              margin-left: 10px;
+            }
+            100% {
+              margin-left: 0px;
+            }
+            .container {
+              padding: 70px;
+            }
           }
-          50% {
-            margin-left: 10px;
-          }
-          100% {
-            margin-left: 0px; 
-          }
-          .container {
-            padding: 70px;
-          }}
           .arrow-symbol {
-              -webkit-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
           }
           .image-container {
@@ -159,13 +159,18 @@ function TeacherView() {
             max-height: 300px;
           }
           #center-img {
-            animation: pulse 6s infinite;          
+            animation: pulse 6s infinite;
           }
           button {
             margin-right: 20px;
           }
           .role-card {
-            background-image: linear-gradient(-70deg, slategray, cadetblue, darkseagreen);
+            background-image: linear-gradient(
+              -70deg,
+              slategray,
+              cadetblue,
+              darkseagreen
+            );
             margin: 20px;
             padding: 30px;
             border: 4px solid darkslategray;
@@ -183,33 +188,34 @@ function TeacherView() {
             width: 5%;
           }
           @keyframes pulse {
-          0% {
-            max-height: 80%;
-            max-width: 80%;
-          }
-          50% {
-            max-height: 100%;
-            max-width: 100%;
-          }
-          100% {
-            max-height: 80%;
-            max-width: 80%;
-          }
+            0% {
+              max-height: 80%;
+              max-width: 80%;
+            }
+            50% {
+              max-height: 100%;
+              max-width: 100%;
+            }
+            100% {
+              max-height: 80%;
+              max-width: 80%;
+            }
           }
           @media only screen and (max-width: 700px) {
-          .role-card {
-            flex-direction: column;
-            align-items: center;
-            margin: 5px;
+            .role-card {
+              flex-direction: column;
+              align-items: center;
+              margin: 5px;
+            }
+            .card-right-side {
+              width: 100%;
+              justify-content: center;
+            }
+            .card-left-side {
+              width: 100%;
+              align-items: center;
+            }
           }
-          .card-right-side {
-            width: 100%;
-            justify-content: center;
-          }
-          .card-left-side {
-            width: 100%;
-           align-items: center;
-        }
         `}
       </style>
     </TeachersLayout>

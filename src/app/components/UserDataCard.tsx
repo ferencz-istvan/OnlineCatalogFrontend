@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { User } from "../../lib/loginData";
 import Modal from "@/app/components/CustomModal";
-import TestModal from "./JustTestComponent";
 import SetUserDatasForm from "./SetUserDatas";
 import SetUserPassword from "./SetUserPassword";
 
@@ -51,7 +50,12 @@ export default function UserCard() {
           max-height: 60%;
         }
         .user-card {
-          background-image: linear-gradient(-70deg, darkseagreen, slategray, cadetblue);
+          background-image: linear-gradient(
+            -70deg,
+            darkseagreen,
+            slategray,
+            cadetblue
+          );
           margin: 20px;
           padding: 30px;
           border: 4px solid darkslategray;
@@ -88,12 +92,17 @@ export default function UserCard() {
             width: 100%;
             justify-content: center;
           }
+          .card-center {
+            width: 100%;
+            align-items: center;
+          }
           .card-left-side {
             width: 100%;
-           align-items: center;
-        }
-        .card-center {
-          padding: 5px;
+            align-items: center;
+          }
+          .card-center {
+            padding: 5px;
+          }
         }
       `}</style>
     </div>

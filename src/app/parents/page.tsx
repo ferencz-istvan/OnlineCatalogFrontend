@@ -80,19 +80,20 @@ function TeacherView() {
             width: 40%;
           }
           @media only screen and (max-width: 700px) {
-          .student-card {
-            flex-direction: column;
-            align-items: center;
-            margin: 5px;
+            .student-card {
+              flex-direction: column;
+              align-items: center;
+              margin: 5px;
+            }
+            .card-right-side {
+              width: 100%;
+              justify-content: center;
+            }
+            .card-left-side {
+              width: 100%;
+              align-items: center;
+            }
           }
-          .card-right-side {
-            width: 100%;
-            justify-content: center;
-          }
-          .card-left-side {
-            width: 100%;
-           align-items: center;
-        }
         `}
       </style>
     </ParentsLayout>
