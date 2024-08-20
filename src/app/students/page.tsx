@@ -8,7 +8,7 @@ import Modal from "@/app/components/CustomModal";
 import UserCard from "../components/UserDataCard";
 import SetStudentDatasForm from "./SetStudentDatas";
 import Link from "next/link";
-import ParentRelation from "../components/ParentRelation";
+import ParentRelation from "./ParentRelation";
 
 function StudentView() {
   const [actualUser, setActualUser] = useState<Partial<User> | null>(null);

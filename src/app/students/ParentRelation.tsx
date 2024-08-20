@@ -1,5 +1,5 @@
-import Modal from "./CustomModal";
-import DefaultModal from "./DefaultModal";
+import Modal from "../components/CustomModal";
+import DefaultModal from "../components/DefaultModal";
 import SetParentRelation from "@/app/students/SetParentRelation";
 import { useState, useEffect } from "react";
 import type { Parent } from "../interfaces/baseInterfaces";

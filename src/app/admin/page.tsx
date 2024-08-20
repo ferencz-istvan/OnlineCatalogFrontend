@@ -9,7 +9,8 @@ import AddNewClassForSchool from "./AddNewClassForSchool";
 function AdminPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [classesData, setClassesData] = useState<SchoolClass[]>([]);
-  useEffect(() => {
+
+  async function loadDatas() {
     const accessToken = localStorage.getItem("accessToken");
     const fetchClassesOfSchool = async () => {
       const response = await fetch(`http://localhost:3000/classes`, {
@@ -23,6 +24,10 @@ function AdminPage() {
       setIsLoaded(true);
     };
     fetchClassesOfSchool();
+  }
+
+  useEffect(() => {
+    loadDatas();
   }, []);
   if (!isLoaded) {
     return <LoaderComponent />;
@@ -36,13 +41,12 @@ function AdminPage() {
             data={classesData}
             tableName="Classes of school"
             AddItemModal={AddNewClassForSchool}
-            /*  DeleteItemModal={DeleteSubject} */
             headerList={["name", "grade", "specialty", "conductor_id"]}
           ></TableComponent>
         </div>
         <style jsx>{`
           .container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;

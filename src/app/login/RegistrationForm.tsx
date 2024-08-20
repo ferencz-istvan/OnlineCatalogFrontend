@@ -24,8 +24,16 @@ export default function RegistrationForm(props: RegistrationProps) {
   const [regClass, setRegClass] = useState("");
   const [regParentId, setRegParentId] = useState(0);
   const [registrationResult, setRegistrationResult] = useState(0);
-
   const [classes, setClasses] = useState([] as Classes[]);
+
+  function clearInputs() {
+    setRegUsername("");
+    setRegEmail("");
+    setRegPassword("");
+    setRegTelNum("");
+    setRegAddress("");
+    setRegConfirmation("");
+  }
 
   async function getClasses() {
     try {
@@ -68,16 +76,13 @@ export default function RegistrationForm(props: RegistrationProps) {
       address: regAddress,
       phone_number: regTelNum,
     };
-    /*  userRegistration(newUser).then((data) => {
-      setUserId(data.user_id);
-      console.log(`User ID: ${userId}`);
-    }); */
     try {
       const result = await userRegistration(newUser);
       setRegistrationResult(result as number);
     } catch (err) {
       console.error(err);
     }
+    clearInputs();
   }
 
   return (

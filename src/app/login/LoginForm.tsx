@@ -162,17 +162,3 @@ export default function LoginForm(props: LoginProps) {
     </div>
   );
 }
-
-/* i need someting like this, but in next, not in vue */
-/* 
-onMounted(() => {
-  const email = sessionStorage.getItem('email')
-  const password = sessionStorage.getItem('password')
-
-  if (email === 'admin' && password === 'admin') {
-    router.push('/')
-  } else {
-    router.push('/login')
-  }
-})
-*/

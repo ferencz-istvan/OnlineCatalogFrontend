@@ -149,11 +149,20 @@ const CatalogPage = () => {
             border: 3px solid darkslategray;
           }
           @media only screen and (max-width: 700px) {
+            h2 {
+              margin-left: 20px;
+            }
             .header-info {
               flex-direction: column;
+              background-color: darkseagreen;
+              margin: 20px;
+              padding: 10px;
+              border-radius: 30px;
             }
             .header-info > * {
               margin: 2px;
+              background-color: transparent;
+              border: none;
             }
           }
         `}

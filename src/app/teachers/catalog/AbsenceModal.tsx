@@ -11,10 +11,7 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
   dataForFetch = null,
 }) => {
   const [idForFetch, setIdForFetch] = useState(dataForFetch?.id);
-  useEffect(() => {
-    console.log(dataForFetch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [isDeleteQuestion, setIsDeleteQuestion] = useState(false);
 
   async function modifyAbsence(idForFetch: number, status: string) {
     try {
@@ -48,21 +45,102 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
 
   return (
     <div>
-      {dataForFetch?.status === "verified" && (
-        <div className="centerWithFlex">
-          <p>This absence is already verified</p>
-          <span>{dataForFetch?.date.slice(0, 10)}</span>
+      {!isDeleteQuestion ? (
+        <div>
+          {dataForFetch?.status === "verified" && (
+            <div className="centerWithFlex">
+              <p>This absence is already verified</p>
+              <span>{dataForFetch?.date.slice(0, 10)}</span>
+              <div className="rowWithFlex">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                  }}
+                >
+                  Okay
+                </button>
+                <button
+                  onClick={(e) => {
+                    /*    modifyAbsence(idForFetch, "deleted")
+                      .then((responseData) => {
+                        console.log("Response data:", responseData);
+                      })
+                      .catch((error) => {
+                        console.error("Error:", error);
+                      });
+                    setIsOpen(false);
+                    location.reload(); */
+                    setIsDeleteQuestion(true);
+                  }}
+                >
+                  Erase it
+                </button>
+              </div>
+            </div>
+          )}
+          {dataForFetch?.status === "unverified" && (
+            <div className="centerWithFlex">
+              <p>This absence is not verified yet</p>
+              <span>{dataForFetch?.date.slice(0, 10)}</span>
+              <div className="rowWithFlex">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={(e) => {
+                    modifyAbsence(idForFetch, "verified")
+                      .then((responseData) => {
+                        console.log("Response data:", responseData);
+                      })
+                      .catch((error) => {
+                        console.error("Error:", error);
+                      });
+                    setIsOpen(false);
+                    location.reload();
+                  }}
+                >
+                  Verify now
+                </button>
+                <button
+                  onClick={(e) => {
+                    setIsDeleteQuestion(true);
+                  }}
+                >
+                  Erase it
+                </button>
+              </div>
+            </div>
+          )}
+          {dataForFetch?.status === "deleted" && (
+            <div className="centerWithFlex">
+              <p>This absence has already been deleted</p>
+              <span>{dataForFetch?.date.slice(0, 10)}</span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpen(false);
+                }}
+              >
+                Okay
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div>
+          <div className="centerWithFlex">
+            Are you sure you want to delete this absence?
+          </div>
           <div className="rowWithFlex">
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setIsOpen(false);
-              }}
-            >
-              Okay
-            </button>
-            <button
-              onClick={(e) => {
                 modifyAbsence(idForFetch, "deleted")
                   .then((responseData) => {
                     console.log("Response data:", responseData);
@@ -74,69 +152,17 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
                 location.reload();
               }}
             >
-              Erase it (only if necessary❗❗)
+              Delete
             </button>
-          </div>
-        </div>
-      )}
-      {dataForFetch?.status === "unverified" && (
-        <div className="centerWithFlex">
-          <p>This absence is not verified yet</p>
-          <span>{dataForFetch?.date.slice(0, 10)}</span>
-          <div className="rowWithFlex">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setIsOpen(false);
               }}
             >
-              Remain unverified
-            </button>
-            <button
-              onClick={(e) => {
-                modifyAbsence(idForFetch, "verified")
-                  .then((responseData) => {
-                    console.log("Response data:", responseData);
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-                setIsOpen(false);
-                location.reload();
-              }}
-            >
-              Verify now
-            </button>
-            <button
-              onClick={(e) => {
-                modifyAbsence(idForFetch, "deleted")
-                  .then((responseData) => {
-                    console.log("Response data:", responseData);
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-                setIsOpen(false);
-                location.reload();
-              }}
-            >
-              Erase it (only if necessary❗❗)
+              Cancel
             </button>
           </div>
-        </div>
-      )}
-      {dataForFetch?.status === "deleted" && (
-        <div className="centerWithFlex">
-          <p>This absence has already been deleted</p>
-          <span>{dataForFetch?.date.slice(0, 10)}</span>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsOpen(false);
-            }}
-          >
-            Okay
-          </button>
         </div>
       )}
 
