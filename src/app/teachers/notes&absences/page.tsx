@@ -45,10 +45,10 @@ function TeacherNotesAndAbsences() {
   /*   function pushToCatalog(catalogInfo: Relation) {
     const { subject, subject_id, class:className, class_id } = catalogInfo;
     //const stringClassId = catalogInfo.class_id.toString();
-    const stringSubjectDatas = JSON.stringify{ name: subject, id: subject_id }
-        const stringSubjectDatas = JSON.stringify{name: class, id: class_id}
-    localStorage.setItem("subject_data", stringSubjectDatas);
-    localStorage.setItem("class_data", stringClassDatas);
+    const stringSubjectData = JSON.stringify{ name: subject, id: subject_id }
+        const stringSubjectData = JSON.stringify{name: class, id: class_id}
+    localStorage.setItem("subject_data", stringSubjectData);
+    localStorage.setItem("class_data", stringClassData);
 
     router.push("/teachers/catalog");
   } */

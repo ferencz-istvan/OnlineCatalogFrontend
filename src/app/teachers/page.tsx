@@ -6,6 +6,8 @@ import { Student } from "../../lib/loginData";
 import UserCard from "../components/UserDataCard";
 import { RelationsOfTeacher } from "../interfaces/complexInterfaces";
 import Link from "next/link";
+import Modal from "../components/CustomModal";
+import SetTeacherDataForm from "./SetTeacherDataForm";
 
 function TeacherView() {
   const [actualRole, setActualRole] = useState<Partial<Student> | null>(null);
@@ -82,7 +84,7 @@ function TeacherView() {
         </div>
         <div className="role-card">
           <div className="card-left-side">
-            <h2>Teacher datas:</h2>
+            <h2>Teacher data:</h2>
             <h3>Matriculation number: {actualRole?.id} </h3>
             <h3>Full name: {actualRole?.name}</h3>
             <h3>
@@ -111,7 +113,15 @@ function TeacherView() {
                 ))}
             </h3>
           </div>
-          <div className="card-right-side"></div>
+          <div className="card-right-side">
+            <Modal buttonName="Edit">
+              <SetTeacherDataForm
+                setIsOpen={function (isOpen: boolean): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            </Modal>
+          </div>
         </div>
       </div>
       <style jsx>

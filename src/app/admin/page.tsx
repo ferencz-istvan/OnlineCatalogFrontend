@@ -10,7 +10,7 @@ function AdminPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [classesData, setClassesData] = useState<SchoolClass[]>([]);
 
-  async function loadDatas() {
+  async function loadData() {
     const accessToken = localStorage.getItem("accessToken");
     const fetchClassesOfSchool = async () => {
       const response = await fetch(`http://localhost:3000/classes`, {
@@ -27,7 +27,7 @@ function AdminPage() {
   }
 
   useEffect(() => {
-    loadDatas();
+    loadData();
   }, []);
   if (!isLoaded) {
     return <LoaderComponent />;

@@ -1,4 +1,4 @@
-//Interfaces where contain datas from more table
+//Interfaces where contain data from more table
 interface RelationsOfTeacher {
   subject: string;
   subject_id: number;

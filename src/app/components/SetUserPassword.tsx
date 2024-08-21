@@ -112,7 +112,7 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
               sendLoginRequest();
             }}
           >
-            Send datas
+            Send data
           </button>
           <br />
           {isNewPassField && (

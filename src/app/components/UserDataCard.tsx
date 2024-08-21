@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { User } from "../../lib/loginData";
 import Modal from "@/app/components/CustomModal";
-import SetUserDatasForm from "./SetUserDatas";
+import SetUserDataForm from "./SetUserData";
 import SetUserPassword from "./SetUserPassword";
 
 export default function UserCard() {
@@ -22,7 +22,7 @@ export default function UserCard() {
         <img src="/icons/user.svg" alt="user icon in user card" />
       </div>
       <div className="card-center">
-        <h1>User datas:</h1>
+        <h1>User data:</h1>
         <h3>Username: {actualUser?.username}</h3>
         <h3>Email: {actualUser?.email}</h3>
         <h3>Role: {actualUser?.role}</h3>
@@ -36,8 +36,8 @@ export default function UserCard() {
             }}
           />
         </Modal>
-        <Modal buttonName="Edit datas">
-          <SetUserDatasForm
+        <Modal buttonName="Edit data">
+          <SetUserDataForm
             setIsOpen={function (isOpen: boolean): void {
               throw new Error("Function not implemented.");
             }}

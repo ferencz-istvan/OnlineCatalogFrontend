@@ -85,7 +85,7 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
                   setStateOfModal("settings");
                 }}
               >
-                Change datas
+                Change data
               </button>
               <button
                 onClick={(e) => {

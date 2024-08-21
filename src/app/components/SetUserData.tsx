@@ -5,7 +5,7 @@ interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
+const SetUserDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
@@ -64,7 +64,7 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
     }
   }
 
-  async function putNewDatas() {
+  async function putNewData() {
     if (emailValue.length < 2 || usernameValue.length < 2) {
       window.alert("Values have to be longer!");
       return;
@@ -123,7 +123,7 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
       </form>
       {isCorrectPw && (
         <div>
-          <p>Now you can change the following datas:</p>
+          <p>Now you can change the following data:</p>
           <form>
             <label htmlFor="username">Username:</label>
             <br />
@@ -148,7 +148,7 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
             <button
               onClick={async (e) => {
                 e.preventDefault();
-                await putNewDatas();
+                await putNewData();
                 handleClose();
                 location.reload();
               }}
@@ -173,4 +173,4 @@ const SetUserDatasForm: React.FC<ModalProps> = ({ setIsOpen }) => {
   );
 };
 
-export default SetUserDatasForm;
+export default SetUserDataForm;

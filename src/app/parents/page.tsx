@@ -41,14 +41,14 @@ function TeacherView() {
         <br />
         <div className="student-card">
           <div className="card-left-side">
-            <h2>Parent datas:</h2>
+            <h2>Parent data:</h2>
             <h3>Matriculation number: {actualRole?.id} </h3>
             <h3>Full name: {actualRole?.name}</h3>
             <h3>Phone number: {actualRole?.phone_number}</h3>
           </div>
           <div className="card-right-side">
             {/*   <Modal buttonName="Edit">
-              <SetStudentDatasForm />
+              <SetStudentDataForm />
             </Modal> */}
           </div>
         </div>

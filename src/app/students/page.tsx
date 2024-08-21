@@ -6,7 +6,7 @@ import { User } from "../../lib/loginData";
 import { Student } from "../../lib/loginData";
 import Modal from "@/app/components/CustomModal";
 import UserCard from "../components/UserDataCard";
-import SetStudentDatasForm from "./SetStudentDatas";
+import SetStudentDataForm from "./SetStudentData";
 import Link from "next/link";
 import ParentRelation from "./ParentRelation";
 
@@ -52,7 +52,7 @@ function StudentView() {
         </div>
         <div className="student-card">
           <div className="card-left-side">
-            <h2>Student datas:</h2>
+            <h2>Student data:</h2>
             <h3>Matriculation number: {actualRole?.id} </h3>
             <h3>Full name: {actualRole?.name}</h3>
             <h3>Class: {actualRole?.class_name}</h3>
@@ -61,7 +61,11 @@ function StudentView() {
           </div>
           <div className="card-right-side">
             <Modal buttonName="Edit">
-              <SetStudentDatasForm />
+              <SetStudentDataForm
+                setIsOpen={function (isOpen: boolean): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
             </Modal>
           </div>
         </div>
