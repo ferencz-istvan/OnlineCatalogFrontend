@@ -66,7 +66,7 @@ const Modal: React.FC<ModalProps> = ({ buttonName, children = null }) => {
         /* Modal Content */
         .modal-content {
           background-color: #fefefe;
-          margin: 20% auto; /* 15% from the top and centered */
+          margin: 12% auto; /* 15% from the top and centered */
           padding: 20px;
           border: 1px solid #888;
           width: 80%;

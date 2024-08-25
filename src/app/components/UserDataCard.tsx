@@ -61,6 +61,7 @@ export default function UserCard() {
           border: 4px solid darkslategray;
           border-radius: 30px;
           display: flex;
+          overflow: auto;
         }
         .card-center {
           display: flex;
@@ -95,13 +96,11 @@ export default function UserCard() {
           .card-center {
             width: 100%;
             align-items: center;
+            padding: 0;
           }
           .card-left-side {
             width: 100%;
             align-items: center;
-          }
-          .card-center {
-            padding: 5px;
           }
         }
       `}</style>

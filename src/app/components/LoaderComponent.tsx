@@ -11,7 +11,7 @@ function LoaderComponent() {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            border: 10px solid #3498db;
+            border: 10px solid darkslategray;
             border-top-color: transparent;
             animation: spin 1s linear infinite;
           }

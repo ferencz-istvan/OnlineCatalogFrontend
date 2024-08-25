@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
 
 interface AddAbsenceModalProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -10,6 +11,7 @@ const AddAbsenceModal: React.FC<AddAbsenceModalProps> = ({
   setIsOpen,
   student_id = 0,
 }) => {
+  const store = useNotesAndAbsencesOfClassStore();
   const [dateForNote, setDateForNote] = useState("");
   useEffect(() => {
     const date = new Date();
@@ -70,14 +72,15 @@ const AddAbsenceModal: React.FC<AddAbsenceModalProps> = ({
         </div>
         <div className="rowWithFlex">
           <button
-            onClick={(e) => {
-              addAbsence()
+            onClick={async (e) => {
+              await addAbsence()
                 .then((responseData) => {
                   console.log("Response data:", responseData);
                 })
                 .catch((error) => {
                   console.error("Error:", error);
                 });
+              await store.setAbsencesOfClass(store.classId, store.subjectId);
               setIsOpen(false);
               //location.reload();
             }}

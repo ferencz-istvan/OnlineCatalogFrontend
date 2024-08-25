@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
-import { User } from "../../lib/loginData";
+import type { Parent } from "@/app/interfaces/baseInterfaces";
 
 interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
-  const [id, setId] = useState(0);
+const SetParentData: React.FC<ModalProps> = ({ setIsOpen }) => {
   const [fullName, setFullName] = useState("");
-  const [classId, setClassId] = useState(0);
-  const [parentId, setParentId] = useState(0);
-  const [address, setAddress] = useState("");
-  const [userId, setUserId] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [actualParent, setActualParent] = useState<Parent | null>(null);
+
   const [isSuccessfull, setIsSuccessfull] = useState(false);
   const [tryOfLoad, setTryOfLoad] = useState(0);
   const [className, setClassName] = useState("");
@@ -21,15 +19,9 @@ const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
       localStorage.getItem("actual_role") as string
     );
     if (actualRole) {
-      setId(actualRole.id);
-      setFullName(actualRole.name);
-      setClassId(actualRole.class_id);
-      setParentId(actualRole.parent_id);
-      setAddress(actualRole.address);
-      setUserId(actualRole.user_id);
-      setClassName(actualRole.class_name);
-      setParentName(actualRole.parent_name);
-      //console.log(`Parent id: ${parentId}+${id}+${fullName}`);
+      setActualParent(actualRole);
+      setPhoneNumber(actualRole?.phone_number as string);
+      setFullName(actualRole?.name as string);
     } else {
       setTryOfLoad((prev) => prev + 1);
     }
@@ -41,42 +33,39 @@ const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
   };
 
   function preChange() {
-    if (fullName.length < 4) {
-      window.alert("The chosen name is too short");
+    if (fullName.length < 4 || phoneNumber.length < 6) {
+      window.alert("The chosen name or phone  number is too short");
     } else {
-      changeFullName();
+      changeParentData();
     }
   }
 
-  async function changeFullName() {
+  async function changeParentData() {
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await fetch(`http://localhost:3000/students/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: fullName,
-          class_id: classId,
-          parent_id: parentId,
-          address: address,
-          user_id: userId,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:3000/parents/${actualParent?.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name: fullName,
+            user_id: actualParent?.user_id,
+            phone_number: phoneNumber,
+          }),
+        }
+      );
       const statusCode = response.status;
       if (statusCode === 200) {
         setIsSuccessfull(true);
         const stringData = JSON.stringify({
-          id: id,
+          id: actualParent?.id,
           name: fullName,
-          class_id: classId,
-          parent_id: parentId,
-          address: address,
-          user_id: userId,
-          class_name: className,
-          parent_name: parentName,
+          user_id: actualParent?.user_id,
+          phone_number: phoneNumber,
         });
         localStorage.setItem("actual_role", stringData);
         console.log(stringData);
@@ -101,14 +90,36 @@ const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
               onChange={(e) => setFullName(e.target.value)}
             />
             <br />
-            <label htmlFor="address">Address:</label>
+            <label htmlFor="address">Phone number:</label>
             <br />
             <input
               type="text"
               id="address"
               name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              onKeyDown={(event) => {
+                const allowedKeys = [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "+",
+                  "#",
+                  "*",
+                  "Backspace",
+                  "Delete",
+                ];
+                if (!allowedKeys.includes(event.key)) {
+                  event.preventDefault();
+                }
+              }}
             />
             <br />
             <button
@@ -123,7 +134,7 @@ const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
         </div>
       ) : (
         <div className="container-center">
-          <p>Successful name change</p>
+          <p>Successful change</p>
           <button
             onClick={() => {
               handleClose();
@@ -163,4 +174,4 @@ const SetStudentDataForm: React.FC<ModalProps> = ({ setIsOpen }) => {
     </div>
   );
 };
-export default SetStudentDataForm;
+export default SetParentData;

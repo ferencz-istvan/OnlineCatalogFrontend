@@ -73,6 +73,7 @@ function StudentSubjects() {
         <TableComponent
           data={fetchedClassMates}
           tableName="Classmates table"
+          headerList={["name", "address"]}
         ></TableComponent>
         <TableComponent
           data={fetchedTeachersOfClass}
@@ -81,7 +82,8 @@ function StudentSubjects() {
         <br />
         <TableComponent
           data={fetchedClass}
-          tableName="Classes table"
+          tableName="Classes in school"
+          headerList={["name", "grade", "specialty"]}
         ></TableComponent>{" "}
       </div>
       <style jsx>

@@ -96,7 +96,7 @@ const DeleteSubject: React.FC<DeleteSubjectProps> = ({
                 console.error("Error:", error);
               });
             handleClose();
-            /* location.reload(); */
+            location.reload();
           }}
         >
           Delete this relation

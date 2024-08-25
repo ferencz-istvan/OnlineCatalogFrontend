@@ -72,8 +72,10 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
                 className="oneNote"
                 key={index}
                 onClick={() => {
-                  setActualNote(oneNote);
-                  setIsOpenNote(true);
+                  if (role === "Teacher") {
+                    setActualNote(oneNote);
+                    setIsOpenNote(true);
+                  }
                 }}
               >
                 <abbr title={oneNote.date.slice(0, 10)}>{oneNote.value}</abbr>
@@ -95,8 +97,10 @@ const CatalogColumn: React.FC<CatalogColumnProps> = ({
                 className={oneAbsence.status}
                 key={index}
                 onClick={() => {
-                  setActualAbsence(oneAbsence);
-                  setIsOpenAbsence(true);
+                  if (role === "Teacher") {
+                    setActualAbsence(oneAbsence);
+                    setIsOpenAbsence(true);
+                  }
                 }}
               >
                 <abbr title={oneAbsence.status}>

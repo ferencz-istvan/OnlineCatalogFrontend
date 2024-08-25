@@ -82,9 +82,9 @@ function ChildStudentNotes() {
   }, [student_id, accessToken]);
   return (
     <ParentsLayout>
-      <div>
+      <p className="title">
         Notes and absences of <b>{childOfParent.name}</b>
-      </div>
+      </p>
       <button
         onClick={() => {
           setIsCatalogView(!isCatalogView);
@@ -165,12 +165,19 @@ function ChildStudentNotes() {
         </div>
       )}
 
-      <TableComponent
-        data={notesOfStudent}
-        tableName="Notes of student"
-      ></TableComponent>
+      {/*
+        <TableComponent
+          data={notesOfStudent}
+          tableName="Notes of student"
+          headerList={["value", "date"]}
+        ></TableComponent>
+      */}
       <style jsx>
         {`
+          .title {
+            margin: 20px 20px 5px 20px;
+            font-size: 18px;
+          }
           .verified {
             margin: 5px;
             background-color: darkseagreen;

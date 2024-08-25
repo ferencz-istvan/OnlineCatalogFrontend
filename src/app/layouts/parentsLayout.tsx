@@ -2,16 +2,18 @@
 
 import HeaderComponent from "../components/HeaderComponent";
 import SideBarComponent from "../components/SideBarComponent";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ParentSidebar from "../parents/ParentSideBar";
+import useSidebarStore from "@/lib/sidebarStore";
 
 interface ParentsLayoutProps {
   children: React.ReactNode;
 }
 
 const ParentsLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
-  const [isNavbar, setIsNavbar] = useState(false);
+  const isNavbar = useSidebarStore((state) => state.isOpen);
+  const changeIsNavbar = useSidebarStore((state) => state.changeSidebarState);
   const router = useRouter();
   const actualUser = localStorage.getItem("actual_user");
   useEffect(() => {
@@ -27,7 +29,7 @@ const ParentsLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
   }, [isNavbar]);
 
   function handleNavbar() {
-    setIsNavbar((prev) => !prev);
+    changeIsNavbar();
   }
   if (actualUser && JSON.parse(actualUser).role === "Parent") {
     return (
@@ -67,7 +69,8 @@ const ParentsLayout: React.FC<ParentsLayoutProps> = ({ children }) => {
         </div>
         <style jsx>{`
           .main {
-            padding: 30px;
+            padding: 10px 30px;
+            min-height: calc(100vh - 215px);
           }
           .footer {
             background-color: slategray;

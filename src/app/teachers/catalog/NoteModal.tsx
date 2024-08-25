@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
 
 interface AbsenceModalProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -10,6 +11,7 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
   setIsOpen,
   dataForFetch = null,
 }) => {
+  const store = useNotesAndAbsencesOfClassStore();
   const [idForFetch, setIdForFetch] = useState(dataForFetch?.id);
   const [noteValue, setNoteValue] = useState(dataForFetch?.value);
   const [dateValue, setDateValue] = useState(dataForFetch?.date.slice(0, 10));
@@ -137,8 +139,8 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
                 Cancel
               </button>
               <button
-                onClick={(e) => {
-                  modifyNote(idForFetch)
+                onClick={async (e) => {
+                  await modifyNote(idForFetch)
                     .then((responseData) => {
                       console.log("Response data:", responseData);
                     })
@@ -146,7 +148,8 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
                       console.error("Error:", error);
                     });
                   setIsOpen(false);
-                  location.reload();
+                  await store.setNotesOfClass(store.classId, store.subjectId);
+                  //location.reload();
                 }}
               >
                 Save changes
@@ -159,8 +162,8 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
             <p>Are you sure to want delete this note?</p>
             <div className="rowWithFlex">
               <button
-                onClick={() => {
-                  deleteNote(idForFetch)
+                onClick={async () => {
+                  await deleteNote(idForFetch)
                     .then((responseData) => {
                       console.log("Response data:", responseData);
                     })
@@ -168,6 +171,8 @@ const NoteModal: React.FC<AbsenceModalProps> = ({
                       console.error("Error:", error);
                     });
                   setIsOpen(false);
+                  await store.setNotesOfClass(store.classId, store.subjectId);
+                  //location.reload();
                 }}
               >
                 Delete

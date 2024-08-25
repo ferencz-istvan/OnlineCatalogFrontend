@@ -75,15 +75,26 @@ function TeacherNotesAndAbsences() {
           </div>
         ))}
       </div>
-      <div>
+      {/* <div>
         <Modal buttonName="Modal test" />
+      </div> */}
+      <div className="image-container">
+        <img
+          src="/icons/schoolBag.svg"
+          alt="image about a column is the catalog"
+          width="250px"
+        />
+        <img
+          src="/icons/catalogColumn.svg"
+          alt="image about a column is the catalog"
+          width="250px"
+        />
+        <img
+          src="/icons/schoolBell.svg"
+          alt="image about a column is the catalog"
+          width="250px"
+        />
       </div>
-      <img
-        src="/icons/catalogColumn.svg"
-        alt="image about a column is the catalog"
-        width="300px"
-      />
-
       <style jsx>{`
         .classContainer {
           display: flex;
@@ -121,6 +132,18 @@ function TeacherNotesAndAbsences() {
             cadetblue
           );
           border: 4px solid darkslategray;
+        }
+        .image-container {
+          display: flex;
+          justify-content: space-around;
+        }
+        .image-container > * {
+          width: 250px;
+        }
+        @media only screen and (max-width: 750px) {
+          .image-container > * {
+            width: 33%;
+          }
         }
       `}</style>
     </ParentsLayout>

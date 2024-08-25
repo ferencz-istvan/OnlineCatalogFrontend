@@ -124,7 +124,7 @@ export default function LoginForm(props: LoginProps) {
         </button>
       </form>
 
-      <button onClick={clearLocalStorages}>Clear storage</button>
+      {/* <button onClick={clearLocalStorages}>Clear storage</button> */}
 
       <style jsx>
         {`

@@ -115,7 +115,9 @@ const AddNewClassForSchool: React.FC<AddProps> = ({
             type="text"
           />
           <br />
-          <label htmlFor="specialty">Specialty of class:</label>
+          <label htmlFor="specialty">
+            Specialty of class <i>(optional)</i>:
+          </label>
           <br />
           <input
             id="specialty"

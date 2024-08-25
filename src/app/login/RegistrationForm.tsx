@@ -161,9 +161,8 @@ export default function RegistrationForm(props: RegistrationProps) {
             />
             <br />
             <label htmlFor="phone">
-              Phone number of parent{" "}
               <abbr title="If your parent already has account, (s)he can connect automatically with your account">
-                (info)
+                Phone number of parent <i>(optional)</i>
               </abbr>
             </label>
             <br />
@@ -306,6 +305,9 @@ export default function RegistrationForm(props: RegistrationProps) {
       )}
       <style jsx>
         {`
+          abbr {
+            text-decoration: none;
+          }
           .registration-form {
             display: flex;
             flex-direction: column;

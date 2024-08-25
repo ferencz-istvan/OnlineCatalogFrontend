@@ -1,9 +1,9 @@
 "use client";
 
-import Modal from "@/app/components/CustomModal";
 import TeachersLayout from "../../layouts/teachersLayout";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
 
 interface Relation {
   subject: string;
@@ -16,7 +16,18 @@ function TeacherNotesAndAbsences() {
   const [isLoaded, setIsLoaded] = useState(false);
   const relationsOfTeacherRef = useRef<Relation[]>([]);
   const router = useRouter();
-
+  const setClassId = useNotesAndAbsencesOfClassStore(
+    (state) => state.setClassId
+  );
+  const setClassName = useNotesAndAbsencesOfClassStore(
+    (state) => state.setClassName
+  );
+  const setSubjectId = useNotesAndAbsencesOfClassStore(
+    (state) => state.setSubjectId
+  );
+  const setSubjectName = useNotesAndAbsencesOfClassStore(
+    (state) => state.setSubjectName
+  );
   useEffect(() => {
     const teacher_id = JSON.parse(
       localStorage.getItem("actual_role") as string
@@ -37,26 +48,16 @@ function TeacherNotesAndAbsences() {
       setIsLoaded(true);
     };
     fetchRelations();
-    /* setTimeout(() => {
-      console.log(relationsOfTeacherRef.current);
-    }, 1000); */
   }, []);
 
-  /*   function pushToCatalog(catalogInfo: Relation) {
-    const { subject, subject_id, class:className, class_id } = catalogInfo;
-    //const stringClassId = catalogInfo.class_id.toString();
-    const stringSubjectData = JSON.stringify{ name: subject, id: subject_id }
-        const stringSubjectData = JSON.stringify{name: class, id: class_id}
-    localStorage.setItem("subject_data", stringSubjectData);
-    localStorage.setItem("class_data", stringClassData);
-
-    router.push("/teachers/catalog");
-  } */
   function pushToCatalog(catalogInfo: Relation) {
     const { subject, subject_id, class: className, class_id } = catalogInfo;
     const subjectData = JSON.stringify({ name: subject, id: subject_id });
     const classData = JSON.stringify({ name: className, id: class_id });
-
+    setClassId(class_id);
+    setClassName(className);
+    setSubjectId(subject_id);
+    setSubjectName(subject);
     localStorage.setItem("subject_data", subjectData);
     localStorage.setItem("class_data", classData);
 
@@ -85,14 +86,13 @@ function TeacherNotesAndAbsences() {
           </div>
         ))}
       </div>
-      <div>
-        <Modal buttonName="Modal test" />
+      <div className="img-container">
+        <img
+          src="/icons/catalogColumn.svg"
+          alt="image about a column is the catalog"
+          width="350px"
+        />
       </div>
-      <img
-        src="/icons/catalogColumn.svg"
-        alt="image about a column is the catalog"
-        width="300px"
-      />
 
       <style jsx>{`
         .classContainer {
@@ -131,6 +131,10 @@ function TeacherNotesAndAbsences() {
             azure
           );
           border: 4px solid darkslategray;
+        }
+        .img-container {
+          display: flex;
+          justify-content: center;
         }
       `}</style>
     </TeachersLayout>

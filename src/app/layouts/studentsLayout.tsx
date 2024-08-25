@@ -2,21 +2,23 @@
 
 import HeaderComponent from "../components/HeaderComponent";
 import SideBarComponent from "../components/SideBarComponent";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import StudentSidebar from "../students/StudentSideBar";
+import useSidebarStore from "@/lib/sidebarStore";
 
 interface StudentsLayoutProps {
   children: React.ReactNode;
 }
 
 const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
-  const [isNavbar, setIsNavbar] = useState(false);
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const changeIsOpen = useSidebarStore((state) => state.changeSidebarState);
   const router = useRouter();
   const actualUser = localStorage.getItem("actual_user");
 
   useEffect(() => {
-    const mainMargins = isNavbar
+    const mainMargins = isOpen
       ? { marginLeft: "300px" }
       : {
           marginLeft: "auto",
@@ -25,10 +27,10 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
       "main"
     )[0] as HTMLElement;
     Object.assign(mainElement.style, mainMargins);
-  }, [isNavbar]);
+  }, [isOpen]);
 
   function handleNavbar() {
-    setIsNavbar((prev) => !prev);
+    changeIsOpen();
   }
   if (actualUser && JSON.parse(actualUser).role === "Student") {
     return (
@@ -37,7 +39,7 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
           handleNavbar={handleNavbar}
           role="student"
         ></HeaderComponent>
-        <SideBarComponent isNavbar={isNavbar} handleNavbar={handleNavbar}>
+        <SideBarComponent isNavbar={isOpen} handleNavbar={handleNavbar}>
           <StudentSidebar />
         </SideBarComponent>
         <div className="main">{children}</div>
@@ -69,6 +71,7 @@ const CustomLayout: React.FC<StudentsLayoutProps> = ({ children }) => {
         <style jsx>{`
           .main {
             padding: 10px 40px;
+            min-height: calc(100vh - 215px);
           }
           .footer {
             background-color: slategray;

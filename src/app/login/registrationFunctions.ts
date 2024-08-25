@@ -20,11 +20,6 @@ export async function userRegistration(userParams: userParams) {
       },
       body: JSON.stringify(userParams),
     });
-
-    //const data = await response.json();
-    /*  if (data) {
-      window.alert("Account created!");
-    } */
     const status = response.status;
     return status;
   } catch (error) {

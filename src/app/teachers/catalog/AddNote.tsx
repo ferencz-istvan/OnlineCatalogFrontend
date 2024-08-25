@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
 
 interface AddNoteModalProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -10,12 +11,13 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
   setIsOpen,
   student_id = 0,
 }) => {
+  const store = useNotesAndAbsencesOfClassStore();
   const [dateForNote, setDateForNote] = useState("");
   const [gradeForNote, setGradeForNote] = useState(10);
   useEffect(() => {
     const date = new Date();
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const month = String(date.getMonth()).padStart(2, "0"); //was +1 after getMounth()
     const day = String(date.getDate()).padStart(2, "0");
     setDateForNote(`${year}-${month}-${day}`);
   }, []);
@@ -82,8 +84,8 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
         </div>
         <div className="rowWithFlex">
           <button
-            onClick={(e) => {
-              addNote()
+            onClick={async (e) => {
+              await addNote()
                 .then((responseData) => {
                   console.log("Response data:", responseData);
                 })
@@ -91,6 +93,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
                   console.error("Error:", error);
                 });
               setIsOpen(false);
+              await store.setNotesOfClass(store.classId, store.subjectId);
               //location.reload();
             }}
           >

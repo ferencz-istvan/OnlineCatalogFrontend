@@ -9,7 +9,9 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
   const [emailValue, setEmailValue] = useState("email");
   const [passwordValue, setPasswordValue] = useState("password");
   const [isNewPassField, setIsNewPassField] = useState(false);
-  const [newPasswordValue, setNewPasswordValue] = useState("newPassword");
+  const [newPasswordValue, setNewPasswordValue] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const [successed, setSuccessed] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -49,6 +51,12 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
   }
 
   async function putNewPassword() {
+    if (newPasswordValue != newPasswordConfirm) {
+      window.alert(
+        "The new password and password verification fields do not match"
+      );
+      return;
+    }
     if (newPasswordValue.length < 4) {
       window.alert("The new password is too short!");
       return;
@@ -78,67 +86,90 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
         password: password,
       }),
     });
-    const data = await response.json();
-    //console.log(data);
+    //const data = await response.json();
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      window.alert("Password change successful");
+      handleClose();
+    }
   }
   return (
     <div className="set-pw-container">
       <div>
         <p>First time give me your email address and password:</p>
-        <form>
-          <label htmlFor="email">Email:</label>
-          <br />
-          <input
-            type="text"
-            id="email"
-            name="email"
-            value={emailValue}
-            onChange={(event) => setEmailValue(event.target.value)}
-          />{" "}
-          <br />
-          <label htmlFor="password">Password:</label>
-          <br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={passwordValue}
-            onChange={(event) => setPasswordValue(event.target.value)}
-          />
-          <br />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              sendLoginRequest();
-            }}
-          >
-            Send data
-          </button>
-          <br />
-          {isNewPassField && (
-            <div>
-              <label htmlFor="new-password">New password:</label>
-              <br />
-              <input
-                type="text"
-                id="new-password"
-                name="new-password"
-                value={newPasswordValue}
-                onChange={(event) => setNewPasswordValue(event.target.value)}
-              />
-              <br />
+        <div className="form-container">
+          <form>
+            <label htmlFor="email">Email:</label>
+            <br />
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value={emailValue}
+              onChange={(event) => setEmailValue(event.target.value)}
+            />{" "}
+            <br />
+            <label htmlFor="password">Password:</label>
+            <br />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={passwordValue}
+              onChange={(event) => setPasswordValue(event.target.value)}
+            />
+            <br />
+            <div className="button-container">
               <button
-                onClick={async (e) => {
+                onClick={(e) => {
                   e.preventDefault();
-                  await putNewPassword();
-                  handleClose();
+                  sendLoginRequest();
                 }}
               >
-                Change password
+                Send data
               </button>
             </div>
-          )}
-        </form>
+            <br />
+            {isNewPassField && (
+              <div>
+                <label htmlFor="new-password">New password:</label>
+                <br />
+                <input
+                  type="password"
+                  id="new-password"
+                  name="new-password"
+                  value={newPasswordValue}
+                  onChange={(event) => setNewPasswordValue(event.target.value)}
+                />
+                <br />
+                <label htmlFor="new-password-confirm">
+                  New password confirmation:
+                </label>
+                <br />
+                <input
+                  type="password"
+                  id="new-password-confirm"
+                  name="new-password-confirm"
+                  value={newPasswordConfirm}
+                  onChange={(event) =>
+                    setNewPasswordConfirm(event.target.value)
+                  }
+                />
+                <br />
+                <div className="button-container">
+                  <button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      await putNewPassword();
+                    }}
+                  >
+                    Change password
+                  </button>
+                </div>
+              </div>
+            )}
+          </form>
+        </div>
       </div>
       <style jsx>{`
         button {
@@ -149,6 +180,21 @@ const SetUserPassword: React.FC<ModalProps> = ({ setIsOpen }) => {
         }
         button:hover {
           box-shadow: 3px 3px 8px darkslategray;
+        }
+        input {
+          padding: 5px;
+          margin: 3px;
+          border-radius: 5px;
+        }
+        .set-pw-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .button-container,
+        .form-container {
+          display: flex;
+          justify-content: center;
         }
       `}</style>
     </div>

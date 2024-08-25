@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
 
 interface AbsenceModalProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -10,6 +11,7 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
   setIsOpen,
   dataForFetch = null,
 }) => {
+  const store = useNotesAndAbsencesOfClassStore();
   const [idForFetch, setIdForFetch] = useState(dataForFetch?.id);
   const [isDeleteQuestion, setIsDeleteQuestion] = useState(false);
 
@@ -62,15 +64,6 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
                 </button>
                 <button
                   onClick={(e) => {
-                    /*    modifyAbsence(idForFetch, "deleted")
-                      .then((responseData) => {
-                        console.log("Response data:", responseData);
-                      })
-                      .catch((error) => {
-                        console.error("Error:", error);
-                      });
-                    setIsOpen(false);
-                    location.reload(); */
                     setIsDeleteQuestion(true);
                   }}
                 >
@@ -93,8 +86,8 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
                   Cancel
                 </button>
                 <button
-                  onClick={(e) => {
-                    modifyAbsence(idForFetch, "verified")
+                  onClick={async (e) => {
+                    await modifyAbsence(idForFetch, "verified")
                       .then((responseData) => {
                         console.log("Response data:", responseData);
                       })
@@ -102,7 +95,11 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
                         console.error("Error:", error);
                       });
                     setIsOpen(false);
-                    location.reload();
+                    //location.reload();
+                    await store.setAbsencesOfClass(
+                      store.classId,
+                      store.subjectId
+                    );
                   }}
                 >
                   Verify now
@@ -139,9 +136,9 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
           </div>
           <div className="rowWithFlex">
             <button
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                modifyAbsence(idForFetch, "deleted")
+                await modifyAbsence(idForFetch, "deleted")
                   .then((responseData) => {
                     console.log("Response data:", responseData);
                   })
@@ -149,7 +146,8 @@ const AbsenceModal: React.FC<AbsenceModalProps> = ({
                     console.error("Error:", error);
                   });
                 setIsOpen(false);
-                location.reload();
+                //location.reload();
+                await store.setAbsencesOfClass(store.classId, store.subjectId);
               }}
             >
               Delete

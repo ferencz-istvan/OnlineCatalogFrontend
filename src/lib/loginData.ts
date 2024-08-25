@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { useState, useEffect } from "react";
-import { headers } from "next/headers";
+//import { useState, useEffect } from "react";
+//import { headers } from "next/headers";
 
 export interface User {
   user_id: number;
@@ -129,11 +129,12 @@ export const useUserPublicData = create<userPublicData>((set) => ({
       const response = await fetch(url, options);
 
       if (!response.ok) {
+        console.log("itt vagyok");
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const responseData = await response.json();
       localStorage.setItem("actual_role", JSON.stringify(responseData));
-      console.log(responseData);
+      //console.log(responseData);
     } catch (error) {
       console.error(error);
     }

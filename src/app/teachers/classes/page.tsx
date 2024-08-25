@@ -1,11 +1,11 @@
 "use client";
 
-import Modal from "@/app/components/CustomModal";
 import TeachersLayout from "../../layouts/teachersLayout";
 import { useState, useEffect, useRef } from "react";
 import TableComponent from "../../components/TableComponent";
 import AddClassRelation from "./AddClassRelation";
 import DeleteSubject from "./DeleteClass Relation";
+import LoaderComponent from "@/app/components/LoaderComponent";
 
 function TeacherAbsences() {
   //const [relationsOfTeacher, setRelationsOfTeacher] = useState([]);
@@ -52,7 +52,7 @@ function TeacherAbsences() {
       </div>
     );
   } */
-  if (!isLoaded) {
+  /* if (!isLoaded) {
     return (
       <div className="loader">
         <style jsx>
@@ -82,7 +82,7 @@ function TeacherAbsences() {
         </style>
       </div>
     );
-  }
+  } */
   return (
     <TeachersLayout>
       {isLoaded ? (
@@ -113,15 +113,16 @@ function TeacherAbsences() {
           </div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <LoaderComponent />
       )}
-      <div>
+      {/* <div>
         <Modal buttonName="Modal test" />
-      </div>
+      </div> */}
       <style jsx>
         {`
           .container {
             display: flex;
+            min-height: 70vh;
           }
           .table-container {
             width: 40%;

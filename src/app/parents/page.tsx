@@ -7,8 +7,10 @@ import TestModal from "@/app/components/JustTestComponent";
 import UserCard from "../components/UserDataCard";
 import ParentsLayout from "../layouts/parentsLayout";
 import type { Parent } from "../interfaces/baseInterfaces";
+import Link from "next/link";
+import SetParentData from "./SetParentData";
 
-function TeacherView() {
+function ParentView() {
   const [actualUser, setActualUser] = useState<Partial<User> | null>(null);
   const [actualRole, setActualRole] = useState<Partial<Parent> | null>(null);
 
@@ -28,8 +30,13 @@ function TeacherView() {
   return (
     <ParentsLayout>
       <div className="container">
-        <div>
-          <Modal buttonName="Testmodal button">
+        <div className="button-container">
+          <Link href="/parents/children">
+            <button className="link-button">
+              Go to the child&apos;s notes
+            </button>
+          </Link>
+          <Modal buttonName="Just a button">
             <TestModal
               setIsOpen={function (isOpen: boolean): void {
                 throw new Error("Function not implemented.");
@@ -39,7 +46,7 @@ function TeacherView() {
         </div>
         <UserCard />
         <br />
-        <div className="student-card">
+        <div className="card">
           <div className="card-left-side">
             <h2>Parent data:</h2>
             <h3>Matriculation number: {actualRole?.id} </h3>
@@ -47,22 +54,52 @@ function TeacherView() {
             <h3>Phone number: {actualRole?.phone_number}</h3>
           </div>
           <div className="card-right-side">
-            {/*   <Modal buttonName="Edit">
-              <SetStudentDataForm />
-            </Modal> */}
+            <Modal buttonName="Edit">
+              <SetParentData
+                setIsOpen={function (isOpen: boolean): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            </Modal>
           </div>
+        </div>
+        <br />
+        <div className="card">
+          <h4>
+            If you want to connect to the child&apos;s account, you can only do
+            so through their account. Please ensure that your phone number is
+            entered correctly.
+          </h4>
         </div>
       </div>
       <style jsx>
         {`
           .container {
-            padding: 70px;
+            padding: 10px 70px;
           }
           button {
             margin-right: 20px;
           }
-          .student-card {
+          .button-container {
+            display: flex;
+          }
+          .link-button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+          .link-button:hover {
+            box-shadow: 3px 3px 8px darkslategray;
+          }
+          .card {
             background-color: DarkSeaGreen;
+            background-image: linear-gradient(
+              -70deg,
+              darkseagreen,
+              slategray,
+              cadetblue
+            );
             margin: 20px;
             padding: 30px;
             border: 4px solid darkslategray;
@@ -80,7 +117,10 @@ function TeacherView() {
             width: 40%;
           }
           @media only screen and (max-width: 700px) {
-            .student-card {
+            .container {
+              padding: 5px;
+            }
+            .card {
               flex-direction: column;
               align-items: center;
               margin: 5px;
@@ -100,29 +140,4 @@ function TeacherView() {
   );
 }
 
-export default TeacherView;
-
-/* "use client";
-
-function ParentPage() {
-  return (
-    <div className="container">
-      <h1>Parent page</h1>
-      <h2>Under construction ...</h2>
-      <style jsx>{`
-        .container {
-          background-color: DarkSlateGrey;
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          color: white;
-        }
-      `}</style>
-    </div>
-  );
-}
-
-export default ParentPage;
- */
+export default ParentView;

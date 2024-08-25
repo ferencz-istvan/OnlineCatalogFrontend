@@ -166,10 +166,10 @@ function StudentNotes() {
         </div>
       )}
 
-      <TableComponent
+      {/*    <TableComponent
         data={notesOfStudent}
         tableName="Notes of student"
-      ></TableComponent>
+      ></TableComponent> */}
       <style jsx>
         {`
           .verified {

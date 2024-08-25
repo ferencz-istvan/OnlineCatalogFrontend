@@ -3,89 +3,68 @@ import React, { useState, useEffect } from "react";
 import TeachersLayout from "../../layouts/teachersLayout";
 import CatalogColumn from "@/app/components/CatalogColumn";
 import type { Student, Note, Absence } from "@/app/interfaces/baseInterfaces";
+import useNotesAndAbsencesOfClassStore from "@/lib/notesAndAbsencesOfClass";
+import LoaderComponent from "@/app/components/LoaderComponent";
 
 const CatalogPage = () => {
-  const [classId, setClassId] = useState(0);
-  const [className, setClassName] = useState("");
-  const [subjectId, setSubjectId] = useState(0);
-  const [subjectName, setSubjectName] = useState("");
-  //const [teacherId, setTeacherId] = useState(0);
   const [studentsOfClass, setStudentsOfClass] = useState<Student[]>([]);
-  const [notesOfClass, setNotesOfClass] = useState<Note[]>([]);
-  const [absencesOfClass, setAbsencesOfClass] = useState<Absence[]>([]);
   const [isStudentsLoaded, setIsStudentsLoaded] = useState(false);
-  const [isNotesLoaded, setIsNotesLoaded] = useState(false);
-  const [isAbsencesLoaded, setIsAbsencesLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const store = useNotesAndAbsencesOfClassStore();
+
   const fetchStudentsOfCLass = async () => {
-    console.log(`classID: ${classId}`);
+    console.log(`classID: ${store.classId}`);
     const response = await fetch(
-      `http://localhost:3000/classes/classmates/${classId}`
+      `http://localhost:3000/classes/classmates/${store.classId}`
     );
     const data = await response.json();
     setStudentsOfClass(data);
     setIsStudentsLoaded(true);
-    console.log("list of students:");
-    console.log(data);
   };
-  const fetchNotesOfClass = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await fetch(
-      `http://localhost:3000/notes/ofClass/${classId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const data = await response.json();
-    setNotesOfClass(data);
-    setIsNotesLoaded(true);
-    console.log("list of notes:");
-    console.log(data);
-  };
-  const fetchAbsencesOfClass = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await fetch(
-      `http://localhost:3000/absences/ofClass/${classId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const data = await response.json();
-    setAbsencesOfClass(data);
-    setIsAbsencesLoaded(true);
+
+  const loadNotesAbsencesFunction = async () => {
+    await store.setNotesOfClass(store.classId, store.subjectId);
+    await store.setAbsencesOfClass(store.classId, store.subjectId);
   };
 
   useEffect(() => {
-    setClassId(JSON.parse(localStorage.getItem("class_data") as string).id);
-    setClassName(JSON.parse(localStorage.getItem("class_data") as string).name);
-    setSubjectId(JSON.parse(localStorage.getItem("subject_data") as string).id);
-    setSubjectName(
-      JSON.parse(localStorage.getItem("subject_data") as string).name
-    );
-    //setTeacherId(JSON.parse(localStorage.getItem("actual_role") as string).id);
+    const classIdFromLS = JSON.parse(
+      localStorage.getItem("class_data") as string
+    ).id;
+    const classNameFromLS = JSON.parse(
+      localStorage.getItem("class_data") as string
+    ).name;
+    const subjectIdFromLS = JSON.parse(
+      localStorage.getItem("subject_data") as string
+    ).id;
+    const subjectNameFromLS = JSON.parse(
+      localStorage.getItem("subject_data") as string
+    ).name;
+    store.setClassId(classIdFromLS);
+    store.setClassName(classNameFromLS);
+    store.setSubjectId(subjectIdFromLS);
+    store.setSubjectName(subjectNameFromLS);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (classId) {
+    if (store.classId) {
       fetchStudentsOfCLass();
-      fetchNotesOfClass();
-      fetchAbsencesOfClass();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [classId]);
+  }, [store.classId]);
   useEffect(() => {
-    if (isStudentsLoaded && isNotesLoaded && isAbsencesLoaded) {
+    if (store.classId && store.subjectId) {
+      loadNotesAbsencesFunction();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.subjectId, store.classId]);
+  useEffect(() => {
+    if (isStudentsLoaded && store.absencesOfClass && store.notesOfClass) {
+      setIsLoaded(false);
       setIsLoaded(true);
     }
-  }, [isStudentsLoaded, isNotesLoaded, isAbsencesLoaded]);
-
+  }, [isStudentsLoaded, store.absencesOfClass, store.notesOfClass]);
   function getLocalStorage() {
     if (typeof window != "undefined") {
       return window.localStorage;
@@ -97,27 +76,27 @@ const CatalogPage = () => {
     <TeachersLayout>
       <h2>Catalog page</h2>
       <div className="header-info">
-        <h3>Class: {className}</h3>
-        <h3>Subject: {subjectName}</h3>
+        <h3>Class: {store.className}</h3>
+        <h3>Subject: {store.subjectName}</h3>
         <h3>
           Teacher:{" "}
-          {
-            //JSON.parse(localStorage.getItem("actual_role") as string).name
-          }
-          {JSON.parse(getLocalStorage()?.getItem("actual_role") as string).name}
+          {localStorage.getItem("actual_role")
+            ? JSON.parse(getLocalStorage()?.getItem("actual_role") as string)
+                .name
+            : null}
         </h3>
       </div>
       <br />
-      {isLoaded && (
+      {isLoaded ? (
         <div className="catalog-container">
           {studentsOfClass.map((student, index) => (
             <div key={index}>
               <CatalogColumn
                 nameProp={student.name}
-                notes={notesOfClass.filter(
+                notes={store.notesOfClass.filter(
                   (note) => note.student_id === student.id
                 )}
-                absences={absencesOfClass.filter(
+                absences={store.absencesOfClass.filter(
                   (absence) => absence.student_id === student.id
                 )}
                 student_id={student.id}
@@ -126,6 +105,8 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <LoaderComponent></LoaderComponent>
       )}
       <style jsx>
         {`
@@ -143,9 +124,6 @@ const CatalogPage = () => {
             background-color: darkseagreen;
             padding: 8px;
             border-radius: 4px;
-             {
-              /* box-shadow: 3px 3px 10px darkslategray; */
-            }
             border: 3px solid darkslategray;
           }
           @media only screen and (max-width: 700px) {
